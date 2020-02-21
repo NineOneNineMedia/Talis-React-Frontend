@@ -63,9 +63,9 @@
                     {% endif %}>
                     <a class="nav-link" href="{% url 'about' %}">About</a>
                 </li>
-                <li {% if 'listings' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3"
+                <li {% if 'search' in request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3"
                     {% endif %}>
-                    <a class="nav-link" href="{% url 'listings' %}">Available Listings</a>
+                    <a class="nav-link" href="{% url 'search' %}">Available Listings</a>
                 </li>
             </ul>
 

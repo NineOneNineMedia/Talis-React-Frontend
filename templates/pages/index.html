@@ -31,7 +31,7 @@
                     <label class="sr-only">State</label>
                     <select name="state" class="form-control">
                         <option selected="true" disabled="disabled">State (All)</option>
-                        {% for key,value in state_choices.items %}
+                        {% for key,value in neighborhood_choices.items %}
                         <option value="{{ key }}">{{ value }}</option>
                         {% endfor %}
                     </select>
@@ -70,14 +70,14 @@
 <!-- Listings -->
 <section id="listings" class="py-5">
     <div class="container">
-        <h3 class="text-center mb-3 font-weight-light">Latest Listings</h3>
+        <h2 class="text-center mb-4 font-weight-light">Latest Listings</h2>
         <div class="row">
             {% if listings %}
             {% for listing in listings %}
             <!-- Listing 1 -->
             <div class="col-md-6 col-lg-4 mb-4">
                 <a href="{% url 'listing' listing.id %}">
-                    <div class="card rounded-0 listing-preview">
+                    <div class="card shadow zoom rounded-0 listing-preview">
                         <img class="card-img-top rounded-0" src="{{ listing.photo_main.url }}" alt="">
                         <div class="card-img-overlay">
                             <h2>
@@ -109,7 +109,18 @@
             {% endif %}
         </div>
     </div>
+    <div class="row justify-content-center mt-3">
+        <a href="{% url 'listings' %}">
+            <div class="col-md-4 text-center">
+                <div class="btn btn-primary rounded-5 px-5 py-2">
+                    View More
+                </div>
+            </div>
+        </a>
+    </div>
 </section>
+
+<hr class="w-50 my-0">
 
 <section id="services" class="py-5">
     <div class="container">
@@ -155,7 +166,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 
