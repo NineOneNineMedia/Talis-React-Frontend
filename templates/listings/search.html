@@ -25,7 +25,7 @@
                                 placeholder="Keyword (Pool, Garage, etc)" value="{{ values.keywords }}">
                         </div>
                         <div class="col-md-3 mb-3">
-                            <select name="state" class="form-control">
+                            <select name="neighborhood" class="form-control">
                                 <option selected="true" disabled="disabled">Neighborhood</option>
                                 {% for key,value in neighborhood_choices.items %}
                                 <option value="{{ key }}" {% if key == values.neighborhood %} selected {% endif %}>

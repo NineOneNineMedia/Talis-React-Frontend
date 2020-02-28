@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load easy_maps_tags %}
+
 {% load humanize %}
 
 {% block title %} | {{ listing.title }}{% endblock %}
@@ -23,7 +25,7 @@
     <div class="container">
         <a href="{% url 'listings' %}" class="btn btn-light mb-4 rounded-0">Back To Listings</a>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <!-- Home Main Image -->
                 <img src="{{ listing.photo_main.url }}" alt="" class="img-main img-fluid mb-3">
                 <!-- Thumbnails -->
@@ -81,7 +83,7 @@
                             </li>
                             <li class="list-group-item">
                                 Bedrooms:
-                                <span class="float-right">{{ listing.bathromms }}</span>
+                                <span class="float-right">{{ listing.bathrooms }}</span>
                             </li>
                             <li class="list-group-item">
                                 Bathrooms:
@@ -119,8 +121,65 @@
                         {{ listing.description }}
                     </div>
                 </div>
+                <div class="row mb-5">
+                    <div class="col-md-12">
+                        {% easy_map listing.property_address 700 400 15 %}
+                    </div>
+                </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="card-title text-center w-100 mb-0 bg-secondary border-0">
+                        <h3><i class="fas fa-phone"></i> {{ listing.realtor.phone }}</h3>
+                    </div>
+                    <div class="col-12 bg-primary pt-2">
+                        <div class="form-group">
+                            <form action="{% url 'contact' %}" method="POST">
+                                {% csrf_token %}
+                                {% if user.is_authenticated %}
+                                <input type="hidden" name="user_id" value="{{ user.id }}">
+                                {% else %}
+                                <input type="hidden" name="user_id" value="0">
+                                {% endif %}
+                                <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
+                                <input type="hidden" name="listing_id" value="{{ listing.id }}">
+                                <input type="hidden" name="listing" class="form-control rounded-0"
+                                    value="{{ listing.title }}">
+                                <div class="form-group">
+                                    <input type="text" name="name" class="form-control rounded-0" placeholder="Name"
+                                        {% if user.is_authenticated %}
+                                        value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control rounded-0"
+                                        placeholder="Email Address" {% if user.is_authenticated %}
+                                        value="{{ user.email }}" {% endif %} required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="phone" placeholder="Phone Number"
+                                        class="form-control rounded-0">
+                                </div>
+                                <div class="form-group mb-0">
+                                    <textarea name="message" class="form-control rounded-0"
+                                        placeholder="Enter Your Message"></textarea>
+                                </div>
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label text-muted" for="defaultCheck1">
+                                        Schedule a tour
+                                    </label>
+                                    <br>
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                                    <label class="form-check-label text-muted" for="defaultCheck2">
+                                        Confirm Availibity
+                                    </label>
+                                </div>
+                                <input type="submit" value="Send Message" class="btn btn-block bg-secondary rounded-0">
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="card mb-3 rounded-0">
                     <img class="card-img-top rounded-0" src="{{ listing.realtor.photo.url }}" alt="Seller of the month">
                     <div class="card-body">
@@ -128,23 +187,11 @@
                         <h6 class="text-secondary">{{ listing.realtor }}</h6>
                     </div>
                 </div>
-                <button class="btn-primary btn-block btn-lg rounded-0" data-toggle="modal"
-                    data-target="#inquiryModal">Make An
-                    Inquiry</button>
-
-                <div id="favorite-section">
-                    {% if is_favorite %}
-                    <a href="{% url 'favorite_listing' listing.id %}">
-                        <i class="fas fa-heart fa-lg"></i>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'favorite_listing' listing.id %}">
-                        <i class="far fa-heart fa-lg"></i>
-                    </a>
-                    {% endif %}
-                </div>
             </div>
+
+
         </div>
+    </div>
     </div>
 </section>
 

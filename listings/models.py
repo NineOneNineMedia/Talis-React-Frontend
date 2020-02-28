@@ -2,12 +2,13 @@ from django.db import models
 from datetime import datetime
 from realtors.models import Realtor
 from django.contrib.auth.models import User
+from django_google_maps import fields as map_fields
 
 
 class Listing(models.Model):
     realtor = models.ForeignKey(Realtor, on_delete=models.DO_NOTHING)
     title = models.CharField(max_length=200)
-    address = models.CharField(max_length=200)
+    property_address = models.CharField(max_length=200, blank=True, default='')
     neighborhood = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     price = models.IntegerField()
@@ -27,6 +28,9 @@ class Listing(models.Model):
     list_date = models.DateTimeField(default=datetime.now, blank=True)
     favorite = models.ManyToManyField(
         User, related_name='favorite', blank=True)
+    address = map_fields.AddressField(max_length=200, blank=True, default='')
+    geolocation = map_fields.GeoLocationField(
+        max_length=100, blank=True, default='')
 
     def __str__(self):
         return self.title

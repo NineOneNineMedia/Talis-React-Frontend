@@ -44,7 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+
+    # Third Party Apps
+    'django_google_maps',
+    'easy_maps',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -147,3 +152,9 @@ try:
     from .local_settings import *
 except ImportError:
     pass
+
+
+# API Keys
+GOOGLE_MAPS_API_KEY = 'AIzaSyA74pXwEhuy0NdjcwPMzDSVHBic8oo6NSE'
+
+EASY_MAPS_GOOGLE_KEY = 'AIzaSyA74pXwEhuy0NdjcwPMzDSVHBic8oo6NSE'

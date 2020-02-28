@@ -2,9 +2,6 @@
 <!-- Navbar -->
 <nav class="navbar navbar-light sticky-top justify-content-between">
     <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
-            <span class="navbar-toggler-icon"></span>
-        </button>
         <div class="logo-nav">
             <a class="navbar-brand" href="{% url 'index' %}">
                 <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 286.81 60.4">
@@ -53,6 +50,9 @@
                 </svg>
             </a>
         </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+            <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav">
                 <li {% if '/' == request.path %} class="nav-item active mr-3" {% else %} class="nav-item mr-3"
