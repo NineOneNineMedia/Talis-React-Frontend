@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% load easy_maps_tags %}
+<!-- {% load easy_maps_tags %} -->
 
 {% load humanize %}
 
@@ -20,10 +20,76 @@
     </div>
 </section>
 
+<section id="top-bar" class="p-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <i class="fas fa-phone"></i> (919)-999-9999
+            </div>
+            <div class="col-md-4">
+                <i class="fas fa-envelope-open"></i> contact@mxnrealty.com
+            </div>
+            <div class="col-md-4">
+                <div class="social text-right">
+                    <a href="#">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Info -->
+<section id="listing-header" class="pb-4">
+    <div class='container-fluid listing-info p-0'>
+        <div class="row w-100">
+            <div class="col-md-1 p-0">
+                <a href="{% url 'search' %}">
+                    <div class="btn back-btn rounded-0">
+                        <i class="fas fa-arrow-left fa-2x"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-9 p-0">
+                <div class="row justify-content-center align-items-center">
+                    <div class="col-md-3 text-center p-0">
+                        <h4>{{ listing.title }}</h4>
+                        <h5 class="font-weight-light">{{ listing.property_address }}</h5>
+                    </div>
+                    <div class="col-md-2 text-center p-0">
+                        <h5>1 Bedroom <span class="font-weight-light">$1000-1250</span></h5>
+                    </div>
+                    <div class="col-md-2 text-center p-0">
+                        <h5>2 Bedroom <span class="font-weight-light">$1400-1800</span></h5>
+                    </div>
+                    <div class="col-md-2 text-center p-0">
+                        <h5>3 Bedroom <span class="font-weight-light">$2000-2250</span></h5>
+                    </div>
+                    <div class="col-md-1 text-center p-0">
+                        <i class="far fa-heart fa-4x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- Listing -->
 <section id="listing" class="py-4">
     <div class="container">
-        <a href="{% url 'listings' %}" class="btn btn-light mb-4 rounded-0">Back To Listings</a>
         <div class="row">
             <div class="col-md-8">
                 <!-- Home Main Image -->
@@ -121,18 +187,13 @@
                         {{ listing.description }}
                     </div>
                 </div>
-                <div class="row mb-5">
-                    <div class="col-md-12">
-                        {% easy_map listing.property_address 700 400 15 %}
-                    </div>
-                </div>
             </div>
             <div class="col-md-4">
-                <div class="row">
-                    <div class="card-title text-center w-100 mb-0 bg-secondary border-0">
-                        <h3><i class="fas fa-phone"></i> {{ listing.realtor.phone }}</h3>
+                <div class="row" id='contact-form'>
+                    <div class="card-title text-center w-100 mb-0 py-3 color1 border-0 text-white">
+                        <h2 class="mb-0"><i class="fas fa-phone"></i> {{ listing.realtor.phone }}</h2>
                     </div>
-                    <div class="col-12 bg-primary pt-2">
+                    <div class="col-12 color3 pt-3">
                         <div class="form-group">
                             <form action="{% url 'contact' %}" method="POST">
                                 {% csrf_token %}
@@ -159,11 +220,11 @@
                                     <input type="text" name="phone" placeholder="Phone Number"
                                         class="form-control rounded-0">
                                 </div>
-                                <div class="form-group mb-0">
+                                <div class="form-group mb-2">
                                     <textarea name="message" class="form-control rounded-0"
                                         placeholder="Enter Your Message"></textarea>
                                 </div>
-                                <div class="form-check mb-4">
+                                <div class="form-check mb-2">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                                     <label class="form-check-label text-muted" for="defaultCheck1">
                                         Schedule a tour
@@ -174,74 +235,20 @@
                                         Confirm Availibity
                                     </label>
                                 </div>
-                                <input type="submit" value="Send Message" class="btn btn-block bg-secondary rounded-0">
+                                <input type="submit" value="Send Message" class="btn btn-block color1">
                             </form>
                         </div>
                     </div>
-
                 </div>
-                <div class="card mb-3 rounded-0">
+                <!-- <div class="card mb-3 rounded-0">
                     <img class="card-img-top rounded-0" src="{{ listing.realtor.photo.url }}" alt="Seller of the month">
                     <div class="card-body">
                         <h5 class="card-title">Property Realtor</h5>
                         <h6 class="text-secondary">{{ listing.realtor }}</h6>
                     </div>
-                </div>
+                </div> -->
             </div>
-
-
         </div>
-    </div>
     </div>
 </section>
-
-<!-- Inquiry Modal -->
-<div class="modal fade rounded-0" id="inquiryModal" role="dialog">
-    <div class="modal-dialog rounded-0">
-        <div class="modal-content rounded-0">
-            <div class="modal-header">
-                <h5 class="modal-title" id="inquiryModalLabel">Make An Inquiry</h5>
-                <button type="button" class="close rounded-0" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="{% url 'contact' %}" method="POST">
-                    {% csrf_token %}
-                    {% if user.is_authenticated %}
-                    <input type="hidden" name="user_id" value="{{ user.id }}">
-                    {% else %}
-                    <input type="hidden" name="user_id" value="0">
-                    {% endif %}
-                    <input type="hidden" name="realtor_email" value="{{ listing.realtor.email }}">
-                    <input type="hidden" name="listing_id" value="{{ listing.id }}">
-                    <div class="form-group">
-                        <label for="property_name" class="col-form-label">Property:</label>
-                        <input type="text" name="listing" class="form-control rounded-0" value="{{ listing.title }}">
-                    </div>
-                    <div class="form-group">
-                        <label for="name" class="col-form-label">Name:</label>
-                        <input type="text" name="name" class="form-control rounded-0" {% if user.is_authenticated %}
-                            value="{{ user.first_name }} {{ user.last_name }}" {% endif %} required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email" class="col-form-label">Email:</label>
-                        <input type="email" name="email" class="form-control rounded-0" {% if user.is_authenticated %}
-                            value="{{ user.email }}" {% endif %} required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone" class="col-form-label">Phone:</label>
-                        <input type="text" name="phone" class="form-control rounded-0">
-                    </div>
-                    <div class="form-group">
-                        <label for="message" class="col-form-label">Message:</label>
-                        <textarea name="message" class="form-control rounded-0"></textarea>
-                    </div>
-                    <hr>
-                    <input type="submit" value="Send" class="btn btn-block btn-secondary rounded-0">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}

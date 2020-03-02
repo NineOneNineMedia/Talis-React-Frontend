@@ -3,6 +3,7 @@ from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from contacts.models import Contact
 
+
 def register(request):
     if request.method == 'POST':
         # Get form values
@@ -25,16 +26,18 @@ def register(request):
                     return redirect('register')
                 else:
                     # Success
-                    user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
-                    # Login after register 
+                    user = User.objects.create_user(
+                        username=username, password=password, email=email, first_name=first_name, last_name=last_name)
+                    # Login after register
                     user.save()
-                    messages.success(request, 'You are now registered and can log in')
+                    messages.success(
+                        request, 'You are now registered and can log in')
                     return redirect('login')
         else:
             messages.error(request, 'You are now registered and can log in')
             return redirect('login')
     else:
-        return render(request, 'accounts/register.html')    
+        return render(request, 'accounts/register.html')
 
 
 def login(request):
@@ -54,7 +57,6 @@ def login(request):
     else:
         return render(request, 'accounts/login.html')
 
-
     return render(request, 'accounts/login.html')
 
 
@@ -68,7 +70,8 @@ def logout(request):
 
 
 def dashboard(request):
-    user_contacts = Contact.objects.order_by('-contact_date').filter(user_id=request.user.id)
+    user_contacts = Contact.objects.order_by(
+        '-contact_date').filter(user_id=request.user.id)
 
     context = {
         'contacts': user_contacts

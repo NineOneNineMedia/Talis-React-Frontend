@@ -12,8 +12,6 @@ def index(request):
 
     context = {
         'listings': listings,
-        'price_choices': price_choices,
-        'bedroom_choices': bedroom_choices,
         'neighborhood_choices': neighborhood_choices
     }
 

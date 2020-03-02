@@ -3,13 +3,35 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+.color1 {
+  background-color: #00A3B0;
+}
+.color2 {
+  background-color: #005479;
+}
+.color3 {
+  background-color: #D9D9D9;
+}
+.color4 {
+  background-color: #F2F2F2;
+}
+.color5 {
+  background-color: #000000;
+}
+
 #map {
   height: 100%;
 }
 
+.back-btn {
+  background-color: #00a3b0;
+  color: white;
+  height: 100%;
+  padding: 1rem 1.5rem;
+}
+
 .btn-secondary {
   color: #fff !important;
-  background-color: #00a3b0;
   border: 0;
 }
 
@@ -132,6 +154,10 @@ img {
 
 #showcase-inner.showcase-search {
   min-height: 300px;
+}
+
+.listing-info {
+  background-color: #D9D9D9;
 }
 
 
