@@ -250,3 +250,23 @@ a:hover {
 .bg-img {
   background-image: url(../Talis/static/img/accra-highway-header.jpeg);
 }
+
+#imgCarousel .carousel-indicators {
+  width: 100%;
+  position: static;
+  justify-content: start;
+  padding: 15px 0;
+  margin: 0;
+  overflow-x: scroll;
+  
+}
+
+#imgCarousel .carousel-indicators li {
+  width: 64px;
+  height: 49px;
+  text-indent: initial;
+}
+
+#imgCarousel .carousel-indicators li.active img {
+  border: 1px solid #00a3b0;
+}

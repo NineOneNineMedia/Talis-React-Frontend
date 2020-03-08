@@ -76,23 +76,23 @@
     <div class="container">
         <h2 class="text-center">Our Team</h2>
         <div class="row text-center">
-            {% if realtors %}
-            {% for realtor in realtors %}
+            {% if developers %}
+            {% for developer in developers %}
             <div class="col-md-4">
-                <img src="{{ realtor.photo.url }}" alt="" class="rounded-circle mb-3">
-                <h4>{{ realtor.name }}</h4>
+                <img src="{{ developer.logo.url }}" alt="" class="rounded-circle mb-3">
+                <h4>{{ developer.name }}</h4>
                 <p class="text-success">
                     <i class="fas fa-award text-success mb-3"></i> Realtor</p>
                 <hr>
                 <p>
-                    <i class="fas fa-phone"></i> {{ realtor.phone }}</p>
+                    <i class="fas fa-phone"></i> {{ developer.phone }}</p>
                 <p>
-                    <i class="fas fa-envelope-open"></i> {{ realtor.email }}</p>
+                    <i class="fas fa-envelope-open"></i> {{ developer.email }}</p>
             </div>
             {% endfor %}
             {% else %}
             <div class="col-md-12">
-                <p>No Realtors Available</p>
+                <p>No Developers Available</p>
             </div>
             {% endif %}
         </div>

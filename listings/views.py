@@ -18,7 +18,7 @@ def index(request):
         'listings': paged_listings
     }
 
-    return render(request, 'listings/search.html', context)
+    return render(request, 'listings/index.html', context)
 
 
 def listing(request, listing_id):
@@ -33,11 +33,6 @@ def listing(request, listing_id):
 
 def search(request):
     queryset_list = Listing.objects.order_by('-list_date')
-    # listings = Listing.objects.order_by('-list_date').filter(is_published=True)
-
-    # paginator = Paginator(listings, 6)
-    # page = request.GET.get('page')
-    # paged_listings = paginator.get_page(page)
 
     # Keywords
     if 'keywords' in request.GET:
@@ -68,7 +63,6 @@ def search(request):
         'neighborhood_choices': neighborhood_choices,
         'listings': queryset_list,
         'values': request.GET,
-        # 'listings': paged_listings
     }
 
     return render(request, 'listings/search.html', context)
