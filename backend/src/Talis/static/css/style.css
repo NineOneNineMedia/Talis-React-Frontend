@@ -1,0 +1,287 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+.color1 {
+  background-color: #00A3B0;
+}
+.color2 {
+  background-color: #005479;
+}
+.color3 {
+  background-color: #D9D9D9;
+}
+.color4 {
+  background-color: #F2F2F2;
+}
+.color5 {
+  background-color: #000000;
+}
+
+.txt-primary
+
+#map {
+  height: 100%;
+}
+
+.back-btn {
+  background-color: #00a3b0;
+  color: white;
+  height: 100%;
+  padding: 1rem 1.5rem;
+}
+
+.btn-secondary {
+  color: #fff !important;
+  border: 0;
+}
+
+img {
+  width: 100%;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  color: #fff !important;
+}
+
+.navbar {
+  text-transform: uppercase;
+  background-color: white;
+}
+
+.logo-nav {
+  margin: auto;
+}
+
+.navbar-brand {
+  width: 150px;
+  height: 50px;
+}
+
+.social a {
+  margin-right: 0.4rem;
+}
+
+.showcase-container {
+  width: 100%;
+  min-height: 650px;
+}
+
+.jumbotron {
+  background-image: url(../img/showcaseimage.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  min-height: 650px;
+  color: #fff;
+  vertical-align: center;
+}
+
+.vertical-center {
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+}
+.jumbotron::after {
+  background-color: black;
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.jumbotron-content {
+  z-index: 1;
+}
+
+#services {
+  color: #000000;
+}
+
+#services .services-info {
+  background-color: #d9d9d9;
+}
+
+#showcase {
+  position: relative;
+  height: 400px;
+  color: #fff;
+  padding-top: 6rem;
+}
+#showcase .home-search {
+  min-height: 400px;
+  position: relative;
+  border-radius: 5px;
+}
+#showcase .overlay {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 400px;
+  width: 100%;
+  background: rgba(51, 51, 51, 0.3);
+  justify-content: center;
+}
+
+
+#showcase-inner {
+  position: relative;
+  top: 0;
+  left: 0;
+  min-height: 300px;
+  width: 100%;
+  background-image: url(../img/tree-header.jpeg);
+  background-size: cover;
+  background-position: center center;
+}
+
+#showcase-inner .overlay {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 300px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#showcase-inner.showcase-search {
+  min-height: 300px;
+}
+
+.listing-info {
+  background-color: #D9D9D9;
+}
+
+
+.zoom:hover {
+  transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  border: 1px solid #00a3b0;
+  transition: all .2s;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.listing-preview a {
+  position: relative;
+}
+
+#mobile-contact {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+}
+/* Footer */
+.footer {
+  width: 100%;
+  background: #000000;
+  color: white;
+  padding-bottom: 80px;
+}
+.footer .links ul {
+  list-style-type: none;
+}
+.footer .links li a {
+  color: white;
+  -webkit-transition: color 0.2s;
+  transition: color 0.2s;
+}
+.footer .links li a:hover {
+  text-decoration: none;
+  color: #4180cb;
+}
+.footer .about-company i {
+  font-size: 25px;
+}
+.footer .about-company a {
+  color: white;
+  -webkit-transition: color 0.2s;
+  transition: color 0.2s;
+}
+.footer .about-company a:hover {
+  color: #4180cb;
+}
+
+.footer .copyright p {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 991px) {
+  #showcase {
+    padding-top: 4rem;
+  }
+  #showcase h1 {
+    font-size: 40px;
+  }
+  .hide-md-down {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  #showcase {
+    padding-top: 3rem;
+  }
+  #showcase h1 {
+    font-size: 40px;
+  }
+  #showcase p {
+    display: none;
+  }
+  #top-bar {
+    text-align: center;
+  }
+  #top-bar .social {
+    text-align: center !important;
+  }
+}
+
+@media (max-width: 576px) {
+  #showcase h1 {
+    font-size: 30px;
+  }
+  #showcase-inner h1 {
+    font-size: 40px;
+  }
+}
+
+.bg-img {
+  background-image: url(../Talis/static/img/accra-highway-header.jpeg);
+}
+
+#imgCarousel .carousel-indicators {
+  width: 100%;
+  position: static;
+  justify-content: start;
+  padding: 15px 0;
+  margin: 0;
+  overflow-x: scroll;
+  
+}
+
+#imgCarousel .carousel-indicators li {
+  width: 64px;
+  height: 49px;
+  text-indent: initial;
+}
+
+#imgCarousel .carousel-indicators li.active img {
+  border: 1px solid #00a3b0;
+}
