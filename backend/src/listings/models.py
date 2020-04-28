@@ -3,10 +3,10 @@ from datetime import datetime
 from developers.models import Developer
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django_google_maps import fields as map_fields
 from django.contrib.postgres.fields import IntegerRangeField
 from psycopg2.extras import NumericRange
 from multiselectfield import MultiSelectField
+from django_google_maps import fields as map_fields
 
 
 class Listing(models.Model):
@@ -89,9 +89,8 @@ class Listing(models.Model):
     list_date = models.DateTimeField(default=datetime.now, blank=True)
     favorite = models.ManyToManyField(
         User, related_name='favorite', blank=True)
-    address = map_fields.AddressField(max_length=200, blank=True, default='')
-    geolocation = map_fields.GeoLocationField(
-        max_length=100, blank=True, default='')
+    address = map_fields.AddressField(max_length=200)
+    geolocation = map_fields.GeoLocationField(max_length=100)
 
     def __str__(self):
         return self.title

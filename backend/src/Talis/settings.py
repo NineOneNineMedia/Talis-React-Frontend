@@ -46,16 +46,17 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.postgres',
 
+    'corsheaders',
     'rest_framework',
 
     # Third Party Apps
     'multiselectfield',
     'django_google_maps',
-    'easy_maps',
 ]
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -161,4 +162,15 @@ except ImportError:
 # API Keys
 GOOGLE_MAPS_API_KEY = 'AIzaSyA74pXwEhuy0NdjcwPMzDSVHBic8oo6NSE'
 
-EASY_MAPS_GOOGLE_KEY = 'AIzaSyA74pXwEhuy0NdjcwPMzDSVHBic8oo6NSE'
+MAPBOX_KEY = "pk.eyJ1IjoibXhudW5sZXkxIiwiYSI6ImNrOTk1eWUwOTAzaTEzZHF3MzQxd3NlaTgifQ.VtOj8_k6ClIAFcvNwUAgRQ"
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.AllowAny'
+    ]
+}
+
+CORS_ORIGIN_ALLOW_ALL = True

@@ -1,0 +1,11 @@
+.listings-form {
+    min-height: 3rem;
+}
+
+.listings-page {
+    max-height: calc(100vh - 8rem);
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import BaseRouter from "./routes";
-import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './scss/App.scss'
 
-import Layout from "./containers/Layout";
 
 class App extends Component {
 
@@ -12,9 +11,7 @@ class App extends Component {
     return (
       <div>
         <Router>
-          <Layout>
-            <BaseRouter />
-          </Layout>
+          <BaseRouter />
         </Router>
       </div>
     );
