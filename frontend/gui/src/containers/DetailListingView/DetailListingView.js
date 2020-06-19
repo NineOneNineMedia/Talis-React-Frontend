@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Col, Container, Jumbotron, Row, Button } from 'react-bootstrap';
+import { Col, Container, Jumbotron, ListGroup, Row, Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFileContract, faShieldAlt, faCar, faDumbbell, faWifi, faConciergeBell } from '@fortawesome/free-solid-svg-icons';
 
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
 import ListingGallery from "../../components/ListingGallery/ListingGallery";
 import ListingContactCard from "../../components/ListingContactCard/ListingContactCard";
 
+
 class DetailListingView extends React.Component {
     state = {
-        listing: {},
+        listing: [],
     }
 
     componentDidMount() {
         const listingID = this.props.match.params.listingID;
-        axios.get(`http://127.0.0.1:8000/api-listings/${listingID}`).then((res) => {
+        axios.get(`http://127.0.0.1:8000/api/listings/listing/${listingID}`).then((res) => {
             this.setState({
                 listing: res.data,
             })
@@ -23,6 +26,19 @@ class DetailListingView extends React.Component {
     }
 
     render() {
+        const data = this.state.listing
+        const leaseData = data.lease_length
+        const recreationData = data.fitness_recreation
+        const featuresData = data.features
+        const securityData = data.security
+        const servicesData = data.service
+        const parkingData = data.parking
+        console.log(leaseData)
+        console.log(recreationData)
+        console.log(featuresData)
+        console.log(securityData)
+        console.log(servicesData)
+        console.log(parkingData)
         return (
             <div>
                 <Header />
@@ -36,8 +52,8 @@ class DetailListingView extends React.Component {
                             </a>
                         </Col>
                         <Col xs={9} md={6} className="text-center my-auto p-0">
-                            <h4 className="m-0">Title</h4>
-                            <h5 className="font-weight-light m-0">Property Address</h5>
+                            <h4 className="m-0">{this.state.listing.title}</h4>
+                            <h5 className="font-weight-light m-0">{this.state.listing.property_address}</h5>
                         </Col>
                         <Col md={4} className="d-none d-md-block text-center my-auto">
                             <h4>Developer Name</h4>
@@ -73,16 +89,16 @@ class DetailListingView extends React.Component {
                 </Container>
                 <Container>
                     <Row>
-                        <Col md={8} className="p-0 m-0">
+                        <Col md={12} className="p-0 m-0">
                             {/* Photo Gallery */}
                             <ListingGallery />
                             {/* Description */}
                             <Row className="mb-5">
                                 <Container>
-                                    <Col className="col-md-12">
+                                    <Col className="col-md-8">
                                         <h3 className="mb-3">About Property Residences</h3>
                                         <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet tortor odio. Proin sagittis malesuada massa, rutrum tempus massa rutrum eu. Duis interdum orci in sagittis fermentum. Nullam nunc felis, rhoncus ac suscipit id, condimentum id neque. Morbi volutpat in nisl in consectetur. Maecenas a pulvinar erat, sit amet mollis nunc. Etiam commodo enim lacus, at varius sapien consectetur.
+                                            {this.state.listing.description}
                                         </p>
                                     </Col>
                                 </Container>
@@ -90,84 +106,77 @@ class DetailListingView extends React.Component {
                             {/* Features */}
                             <Row className="mb-5">
                                 <Container>
-                                    <Col className="col-md-12">
+                                    <Col className="col-md-8">
                                         <h3 className="mb-3">Amenities</h3>
                                         <Row>
                                             <Col className="col-lg-6">
                                                 <div className=" d-flex">
                                                     <Col className="col-1 d-flex justify-content-end p-0 text-primary">
-                                                        <i className="fas fa-file-contract fa-2x"></i>
+                                                        <FontAwesomeIcon icon={faFileContract} size="2x" className="mr-3" />
                                                     </Col>
                                                     <Col className="col-11">
                                                         <h4>Lease Opitions</h4>
-                                                        <ul>
-                                                            <li>choice</li>
-                                                        </ul>
+                                                        <List data={leaseData} />
                                                     </Col>
                                                 </div>
                                             </Col>
                                             <Col className="col-lg-6">
                                                 <div className=" d-flex">
                                                     <Col className="col-1 d-flex justify-content-end p-0 text-primary">
+                                                        <FontAwesomeIcon icon={faShieldAlt} size="2x" className="mr-3" />
                                                         <i className="fas fa-shield-alt fa-2x"></i>
                                                     </Col>
                                                     <Col className="col-11">
                                                         <h4>Security</h4>
-                                                        <ul>
-                                                            <li>choice</li>
-                                                        </ul>
+                                                        <List data={securityData} />
                                                     </Col>
                                                 </div>
                                             </Col>
                                             <Col className="col-lg-6">
                                                 <div className=" d-flex">
                                                     <Col className="col-1 d-flex justify-content-end text-primary p-0">
+                                                        <FontAwesomeIcon icon={faCar} size="2x" className="mr-3" />
                                                         <i className="fas fa-car fa-2x"></i>
                                                     </Col>
                                                     <Col className="col-11">
                                                         <h4>Parking</h4>
-                                                        <ul>
-                                                            <li>choice</li>
-                                                        </ul>
+                                                        <List data={parkingData} />
                                                     </Col>
                                                 </div>
                                             </Col>
                                             <Col className="col-lg-6">
                                                 <div className=" d-flex">
                                                     <Col className="col-1 d-flex justify-content-end p-0 text-primary">
+                                                        <FontAwesomeIcon icon={faConciergeBell} size="2x" className="mr-3" />
                                                         <i className="fas fa-concierge-bell fa-2x"></i>
                                                     </Col>
                                                     <Col className="col-11">
                                                         <h4>Services</h4>
-                                                        <ul>
-                                                            <li>choice</li>
-                                                        </ul>
+                                                        <List data={servicesData} />
                                                     </Col>
                                                 </div>
                                             </Col>
                                             <Col className="col-lg-6">
                                                 <div className=" d-flex">
                                                     <Col className=" col-1 d-flex justify-content-end p-0 text-primary">
+                                                        <FontAwesomeIcon icon={faWifi} size="2x" className="mr-3" />
                                                         <i className="fas fa-wifi fa-2x"></i>
                                                     </Col>
                                                     <Col className="col-11">
                                                         <h4>Features</h4>
-                                                        <ul>
-                                                            <li>choice</li>
-                                                        </ul>
+                                                        <List data={featuresData} />
                                                     </Col>
                                                 </div>
                                             </Col>
                                             <Col className="col-lg-6">
                                                 <div className=" d-flex">
                                                     <Col className="col-1 d-flex justify-content-end p-0 text-primary">
+                                                        <FontAwesomeIcon icon={faDumbbell} size="2x" className="mr-3" />
                                                         <i className="fas fa-dumbbell fa-2x"></i>
                                                     </Col>
                                                     <Col className="col-11">
                                                         <h4>Fitness & Recreation</h4>
-                                                        <ul>
-                                                            <li>choice</li>
-                                                        </ul>
+                                                        <List data={recreationData} />
                                                     </Col>
                                                 </div>
                                             </Col>
@@ -190,3 +199,23 @@ class DetailListingView extends React.Component {
 }
 
 export default DetailListingView;
+
+function List({ data }) {
+    if (!data) {
+        return null;
+    } else if (data) {
+        return (
+            <ListGroup variant="flush">
+                <ListGroup.Item>{data}</ListGroup.Item>
+            </ListGroup>
+        );
+    } else {
+        return (
+            <ListGroup variant="flush">
+                {data.map(item => (
+                    <ListGroup.Item key={item.id}>{item}</ListGroup.Item>
+                ))}
+            </ListGroup>
+        );
+    }
+}

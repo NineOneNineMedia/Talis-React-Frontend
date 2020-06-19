@@ -6,7 +6,9 @@ from django.urls import reverse
 from django.contrib.postgres.fields import IntegerRangeField
 from psycopg2.extras import NumericRange
 from multiselectfield import MultiSelectField
-from django_google_maps import fields as map_fields
+import googlemaps
+
+gmaps = googlemaps.Client(key='AIzaSyC00vQGfJ3FNZ2oM-GkUMT4vYJOxyXQv64')
 
 
 class Listing(models.Model):
@@ -45,9 +47,18 @@ class Listing(models.Model):
         ('Game Room', 'Game Room'),
     )
 
+    PROPERTY_TYPE = (
+        ('House', 'House'),
+        ('Condo', 'Condo'),
+        ('Townhome', 'Townhome'),
+        ('Apartment', 'Apartment'),
+    )
+
     developer = models.ForeignKey(
         Developer, on_delete=models.DO_NOTHING, null=True)
     title = models.CharField(max_length=200)
+    property_type = models.CharField(
+        choices=PROPERTY_TYPE, max_length=9, blank=True, default='', null=True)
     property_address = models.CharField(max_length=200, blank=True, default='')
     neighborhood = models.CharField(max_length=200)
     description = models.TextField(blank=True)
@@ -89,11 +100,28 @@ class Listing(models.Model):
     list_date = models.DateTimeField(default=datetime.now, blank=True)
     favorite = models.ManyToManyField(
         User, related_name='favorite', blank=True)
-    address = map_fields.AddressField(max_length=200)
-    geolocation = map_fields.GeoLocationField(max_length=100)
+    lat = models.DecimalField(
+        max_digits=8, decimal_places=6, null=True, blank=True)
+    lng = models.DecimalField(
+        max_digits=8, decimal_places=6, null=True, blank=True)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
         return reverse('listing', kwargs={'listing_id': self.id})
+
+    def location(self):
+        return (self.lat, self.lng)
+
+    def save(self, *args, **kwargs):
+        if not self.lat or not self.lng:
+            self.lat, self.lng = self.get_geocode()
+        super(Listing, self).save(*args, **kwargs)
+
+    def get_geocode(self):
+        geocode_result = gmaps.geocode(
+            self.property_address)
+        lat = geocode_result[0]['geometry']['location']['lat']
+        lng = geocode_result[0]['geometry']['location']['lng']
+        return lat, lng

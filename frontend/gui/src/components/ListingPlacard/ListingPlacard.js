@@ -5,33 +5,35 @@ import PlacardGallery from "../PlacardGallery/PlacardGallery";
 const ListingPlacard = (props) => {
     return (
         <div>
-            {/* {props.data.map((data) => {
-                return ( */}
-            <Card>
-                <Card.Header>
-                    <Row>
-                        <Col sm={9}>
-                            <Row>Title</Row>
-                            <Row>Address</Row>
-                        </Col>
-                        <Col sm={3}>Developer</Col>
-                    </Row>
-                </Card.Header>
-                <Card.Body className="p-0">
-                    <Row>
-                        <Col sm={8}>
-                            <PlacardGallery />
-                        </Col>
-                        <Col>
-                            <Row>Price</Row>
-                            <Row>Bedrooms</Row>
-                            <Row>Bathrooms</Row>
-                        </Col>
-                    </Row>
-                </Card.Body>
-            </Card>
-            {/* );
-            })} */}
+            {props.data.map((data) => {
+                return (
+
+                    <Card key={data.id} className="mb-2">
+                        <a href={`/listings/${data.id}`}><Card.Header>
+                            <Row>
+                                <Col sm={9}>
+                                    <Row>{data.title}</Row>
+                                    <Row>{data.address}</Row>
+                                </Col>
+                                <Col sm={3}>{data.developer}</Col>
+                            </Row>
+                        </Card.Header>
+                        </a>
+                        <Card.Body className="p-0">
+                            <Row>
+                                <Col sm={8}>
+                                    <PlacardGallery />
+                                </Col>
+                                <Col>
+                                    <Row>{data.price}</Row>
+                                    <Row>{data.bedrooms.lower}</Row>
+                                    <Row>{data.bathrooms}</Row>
+                                </Col>
+                            </Row>
+                        </Card.Body>
+                    </Card>
+                );
+            })}
         </div >
     );
 }

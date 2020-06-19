@@ -1,0 +1,14 @@
+.section {
+    width: 100vw;
+    background-color: $color-tertiary;
+}
+.height330 {
+    height: 330px;
+}
+
+.imageContainerCovered {
+    width: 100%;
+    background-size: cover!important;
+    background-position: center center;
+    background-repeat: no-repeat;
+}

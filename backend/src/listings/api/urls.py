@@ -1,7 +1,10 @@
-from rest_framework.routers import DefaultRouter
-from listings.api.views import ListingViewSet
+from rest_framework.urlpatterns import format_suffix_patterns
+from .views import ListingsList, ListingDetail
 from django.urls import path
 
-router = DefaultRouter()
-router.register('', ListingViewSet, basename='listings')
-urlpatterns = router.urls
+urlpatterns = [
+    path('', ListingsList.as_view()),
+    path('listing/<int:pk>', ListingDetail.as_view()),
+]
+
+urlpatterns = format_suffix_patterns(urlpatterns)

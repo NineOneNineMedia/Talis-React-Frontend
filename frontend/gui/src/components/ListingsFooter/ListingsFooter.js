@@ -20,8 +20,8 @@ const ListingsFooter = () => {
                                 residential and commercial properties
                             </p>
                             <p>
-                                <a href="#"><FontAwesomeIcon icon={faFacebookSquare} className="mr-1" /></a>
-                                <a href="#"><FontAwesomeIcon icon={faLinkedin} className="fab fa-linkedin-square" /></a>
+                                <a href="#home"><FontAwesomeIcon icon={faFacebookSquare} className="mr-1" /></a>
+                                <a href="#home"><FontAwesomeIcon icon={faLinkedin} className="fab fa-linkedin-square" /></a>
                             </p>
                         </Col>
                     </Row>
@@ -29,12 +29,12 @@ const ListingsFooter = () => {
                         <Col xs={12} className="links">
                             <h4 className="mt-3">Neighborhoods</h4>
                             <ul className="m-0 p-0 font-weight-light">
-                                <li>- <a href="#">Airport</a></li>
-                                <li>- <a href="#">Cantonments</a></li>
-                                <li>- <a href="#">Dzorwulu</a></li>
-                                <li>- <a href="#">East Legon</a></li>
-                                <li>- <a href="#">Labone</a></li>
-                                <li>- <a href="#">Roman Ridge</a></li>
+                                <li>- <a href="#home">Airport</a></li>
+                                <li>- <a href="#home">Cantonments</a></li>
+                                <li>- <a href="#home">Dzorwulu</a></li>
+                                <li>- <a href="#home">East Legon</a></li>
+                                <li>- <a href="#home">Labone</a></li>
+                                <li>- <a href="#home">Roman Ridge</a></li>
                             </ul>
                         </Col>
                     </Row>

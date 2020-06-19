@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
-import { icon } from 'leaflet'
+import React from 'react';
+import { Map, TileLayer } from 'react-leaflet';
 
 const accessToken = process.env.REACT_APP_MAPBOX_KEY;
 

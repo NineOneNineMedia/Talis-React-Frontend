@@ -9,7 +9,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('contacts/', include('contacts.urls')),
     path('accounts/', include('accounts.urls')),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api-listings/', include('listings.api.urls')),
-    path('api-contacts/', include('contacts.api.urls'))
+    path('api/auth/', include('rest_framework.urls')),
+    path('api/rest-auth/', include('rest_auth.urls')),
+    path('api/rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('api/pages/', include('pages.api.urls')),
+    path('api/listings/', include('listings.api.urls')),
+    path('api/contacts/', include('contacts.api.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

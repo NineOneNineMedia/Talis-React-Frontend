@@ -15,7 +15,7 @@ class HomeView extends React.Component {
     };
 
     componentDidMount() {
-        axios.get("http://127.0.0.1:8000/api-listings/").then((res) => {
+        axios.get("http://127.0.0.1:8000/api/pages/").then((res) => {
             this.setState({
                 listings: res.data,
             })
@@ -27,7 +27,7 @@ class HomeView extends React.Component {
         return (
             <div>
                 <Header />
-                <Jumbotron fluid className="p-0" style={{ marginTop: "4rem" }}>
+                <Jumbotron fluid className="p-0">
                     <div className="jumbotron-overlay">
                         <div className="container text-center jumbotron-content">
                             <h1 className="display-4 font-weight-bold">

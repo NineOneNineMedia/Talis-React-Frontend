@@ -19,7 +19,7 @@ const ListingCards = (props) => {
                                     Price: {data.lease_length[0]}
                                             <br></br>
                                     Beds: {data.bedrooms.lower}-{data.bedrooms.upper} | Baths:
-                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -1,19 +1,25 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
+
 import AboutView from "./containers/AboutView/AboutView";
 import HomeView from "./containers/HomeView/HomeView";
-import ListingsView from "./containers/ListingsView/ListingsView";
+import ListingView from "./containers/ListingView/ListingView";
 import DetailListingView from "./containers/DetailListingView/DetailListingView";
-import DashboardView from "./containers/DashboardView/DashboardView";
+import UserProfileView from "./containers/UserProfileView/UserProfileView";
+import UserLoginView from "./containers/UserLoginView/UserLoginView";
 
 const BaseRouter = () => (
     <div>
         <Route exact path="/" component={HomeView} />
+        <Route exact path="/login/" component={UserLoginView} />
+        <Route exact path="/register/" component={UserLoginView} />
         <Route exact path="/about" component={AboutView} />
-        <Route exact path="/listings" component={ListingsView} />
+        <Route exact path="/listings" component={ListingView} />
         <Route exact path="/listings/:listingID" component={DetailListingView} />
-        <Route exact path="/dashboard" component={DashboardView} />
+        <Route exact path="/myTalis/profile" component={UserProfileView} />
+        <Route exact path="/myTalis/favorites" component={UserProfileView} />
+        <Route exact path="/myTalis/account" component={UserProfileView} />
     </div>
 );
 
