@@ -33,18 +33,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django.contrib.postgres',
+
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'rest_auth.registration',
+    'allauth.socialaccount',
     'corsheaders',
+    'rest_auth',
+    'rest_auth.registration',
     'rest_framework',
     'rest_framework.authtoken',
-
-    # Third Party Apps
     'multiselectfield',
     'algoliasearch_django',
-    'rest_auth'
 ]
 
 
@@ -179,3 +179,8 @@ ALGOLIA = {
 
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_AUTHENTICATION_METHOD = 'username'
+ACCOUNT_EMAIL_REQUIRED = 'False'

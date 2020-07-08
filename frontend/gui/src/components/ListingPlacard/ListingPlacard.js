@@ -7,7 +7,6 @@ const ListingPlacard = (props) => {
         <div>
             {props.data.map((data) => {
                 return (
-
                     <Card key={data.id} className="mb-2">
                         <a href={`/listings/${data.id}`}><Card.Header>
                             <Row>

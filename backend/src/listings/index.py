@@ -14,6 +14,6 @@ class ListingModelIndex(AlgoliaIndex):
             'property_type',
         ],
         'queryType': 'prefixAll',
-        'hitsPerPage': 5
+        'hitsPerPage': 5,
     }
     index_name = 'test_LISTING'
