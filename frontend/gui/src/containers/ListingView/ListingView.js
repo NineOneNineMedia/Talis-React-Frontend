@@ -7,7 +7,6 @@ import algoliasearch from 'algoliasearch/lite';
 import { GoogleMapsLoader, GeoSearch, Control, Marker } from 'react-instantsearch-dom-maps';
 import { InstantSearch, SearchBox, Pagination, Hits } from 'react-instantsearch-dom';
 import Header from '../../components/Header/Header';
-// import { Container, Col, Form, Row, DropdownButton, DropdownItem } from 'react-bootstrap';
 import { CustomHits } from '../../components/CustomHits/CustomHits'
 import ListingsFooter from '../../components/ListingsFooter/ListingsFooter'
 import { CustomSearchBox } from '../../components/CustomSearchBox/CustomSearchBox'

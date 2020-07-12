@@ -19,7 +19,11 @@ import * as Yup from 'yup';
 import { LinearProgress } from '@material-ui/core';
 import { Redirect } from "react-router-dom";
 // import { TextField } from 'formik-material-ui';
+import { authSuccess, authFail } from '../../store/actions/auth';
 import * as actions from '../../store/actions/auth';
+import GoogleLogin from 'react-google-login';
+import axios from 'axios';
+
 
 function Copyright() {
     return (
@@ -59,27 +63,30 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function SignUpForm(props, { loading, error }) {
+function SignUpForm(props, { loading, authFail }) {
     const classes = useStyles();
+    const responseGoogle = (response) => {
+        console.log(response);
+        const token = response.accessToken
+        axios.post('http://127.0.0.1:8000/api/rest-auth/google/', {
+            access_token: token
+        })
+            .then(res => {
+                const token = res.data.key;
+                const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+                localStorage.setItem('token', token);
+                localStorage.setItem('expirationDate', expirationDate)
+                this.props.dispatch(this.propsauthSuccess(token));
+                this.props.dispatch(this.props.checkAuthTimeout(3600));
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
     if (props.isAuthenticated) {
         return <Redirect to="/" />;
     }
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     this.props.form.validateFieldsAndScroll((err, values) => {
-    //         if (!err) {
-    //             this.props.onAuth(
-    //                 values.userName,
-    //                 values.email,
-    //                 values.password,
-    //                 values.confirm
-    //             );
-    //             this.props.history.push('/');
-    //         }
-    //     });
-    // }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -218,11 +225,25 @@ function SignUpForm(props, { loading, error }) {
                                 >
                                     Sign Up
                                 </Button>
-                                <Grid container justify="flex-end">
+                                <Grid container justify="center">
                                     <Grid item>
                                         <Link href="/login" variant="body2">
                                             Already have an account? Sign in
                                         </Link>
+                                    </Grid>
+                                </Grid>
+                                <Grid container justify="center">
+                                    <Grid item>
+                                        <GoogleLogin
+                                            clientId="546087303051-a1j9lmu3d4i7m49qq5chv84qnlsgnrb3.apps.googleusercontent.com"
+                                            buttonText="Sign in with Google"
+                                            redirectUri="http://127.0.0.1:8000/accounts/google/login/callback/"
+                                            responseType="id_token code"
+                                            accessType="offline"
+                                            onSuccess={responseGoogle}
+                                            onFailure={responseGoogle}
+                                            cookiePolicy={'single_host_origin'}
+                                        />
                                     </Grid>
                                 </Grid>
                             </Form>
@@ -246,7 +267,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (username, email, password1, password2) => dispatch(actions.authSignUp(username, email, password1, password2))
+        onAuth: (username, email, password1, password2) => dispatch(actions.authSignUp(username, email, password1, password2)),
+        google: () => dispatch(actions.authGoogleSignUp())
     }
 }
 

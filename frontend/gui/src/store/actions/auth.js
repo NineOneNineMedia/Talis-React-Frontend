@@ -81,6 +81,28 @@ export const authSignUp = (username, email, password1, password2) => {
     }
 }
 
+export const authGoogleSignUp = () => {
+    return dispatch => {
+        dispatch(authStart());
+        axios.post('https://accounts.google.com/o/oauth2/v2/auth?', {
+            CLIENT_ID: '546087303051-a1j9lmu3d4i7m49qq5chv84qnlsgnrb3.apps.googleusercontent.com',
+            CLIENT_SECRET: 'AbTwqrwGDyxjjW5m-bEKjq3T',
+            REDIRECT_URI: 'http://127.0.0.1:8000/accounts/google/login/callback/'
+        })
+            .then(res => {
+                const token = res.data.key;
+                const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+                localStorage.setItem('token', token);
+                localStorage.setItem('expirationDate', expirationDate)
+                dispatch(authSuccess(token));
+                dispatch(checkAuthTimeout(3600));
+            })
+            .catch(err => {
+                dispatch(authFail(err))
+            })
+    }
+}
+
 export const authCheckState = () => {
     return dispatch => {
         const token = localStorage.getItem('token');
