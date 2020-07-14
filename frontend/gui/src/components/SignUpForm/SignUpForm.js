@@ -67,21 +67,24 @@ function SignUpForm(props, { loading, authFail }) {
     const classes = useStyles();
     const responseGoogle = (response) => {
         console.log(response);
-        const token = response.accessToken
-        axios.post('http://127.0.0.1:8000/api/rest-auth/google/', {
-            access_token: token
-        })
-            .then(res => {
-                const token = res.data.key;
-                const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-                localStorage.setItem('token', token);
-                localStorage.setItem('expirationDate', expirationDate)
-                this.props.dispatch(this.propsauthSuccess(token));
-                this.props.dispatch(this.props.checkAuthTimeout(3600));
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        const access_token = response.accessToken;
+        props.googleAuth(
+            access_token
+        );
+        // axios.post('http://127.0.0.1:8000/api/rest-auth/google/', {
+        //     access_token: token
+        // })
+        //     .then(res => {
+        //         const token = res.data.key;
+        //         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+        //         localStorage.setItem('token', token);
+        //         localStorage.setItem('expirationDate', expirationDate)
+        //         dispatch(props.authSuccess(token));
+        //         dispatch(props.checkAuthTimeout(3600));
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
     }
 
     if (props.isAuthenticated) {
@@ -268,7 +271,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (username, email, password1, password2) => dispatch(actions.authSignUp(username, email, password1, password2)),
-        google: () => dispatch(actions.authGoogleSignUp())
+        googleAuth: (access_token) => dispatch(actions.authGoogleSignUp(access_token)),
     }
 }
 

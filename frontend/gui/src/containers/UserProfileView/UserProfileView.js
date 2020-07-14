@@ -52,6 +52,11 @@ export default function HomeView() {
                         </ListItem>
                         <Divider className={classes.divder} />
                         <ListItem button>
+                            <ListItemIcon><AccountBoxIcon /></ListItemIcon>
+                            <ListItemText primary="Profile" />
+                        </ListItem>
+                        <Divider className={classes.divder} />
+                        <ListItem button>
                             <ListItemIcon><SearchIcon /></ListItemIcon>
                             <ListItemText primary="Saved Listings" />
                         </ListItem>

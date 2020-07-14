@@ -81,13 +81,11 @@ export const authSignUp = (username, email, password1, password2) => {
     }
 }
 
-export const authGoogleSignUp = () => {
+export const authGoogleSignUp = (access_token) => {
     return dispatch => {
         dispatch(authStart());
-        axios.post('https://accounts.google.com/o/oauth2/v2/auth?', {
-            CLIENT_ID: '546087303051-a1j9lmu3d4i7m49qq5chv84qnlsgnrb3.apps.googleusercontent.com',
-            CLIENT_SECRET: 'AbTwqrwGDyxjjW5m-bEKjq3T',
-            REDIRECT_URI: 'http://127.0.0.1:8000/accounts/google/login/callback/'
+        axios.post('http://127.0.0.1:8000/api/rest-auth/google/', {
+            access_token: access_token
         })
             .then(res => {
                 const token = res.data.key;
@@ -98,7 +96,7 @@ export const authGoogleSignUp = () => {
                 dispatch(checkAuthTimeout(3600));
             })
             .catch(err => {
-                dispatch(authFail(err))
+                console.log(err);
             })
     }
 }
