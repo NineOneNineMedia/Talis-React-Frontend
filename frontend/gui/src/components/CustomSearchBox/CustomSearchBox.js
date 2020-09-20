@@ -28,7 +28,7 @@ function SearchBox({ currentRefinement, isSearchStalled, refine }) {
     const classes = useStyles();
 
     return (
-        <Grid item md={4} className={classes.search}>
+        <Grid item md={4}>
             <FormControl variant="outlined" size="small" fullWidth >
                 <InputLabel htmlFor="component-outlined">Search</InputLabel>
                 <OutlinedInput id="component-outlined"

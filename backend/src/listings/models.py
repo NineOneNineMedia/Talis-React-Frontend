@@ -3,7 +3,6 @@ from datetime import datetime
 from developers.models import Developer
 from django.contrib.auth.models import User
 from django.urls import reverse
-from django.contrib.postgres.fields import IntegerRangeField
 from psycopg2.extras import NumericRange
 from multiselectfield import MultiSelectField
 import googlemaps
@@ -57,20 +56,18 @@ class Listing(models.Model):
     developer = models.ForeignKey(
         Developer, on_delete=models.DO_NOTHING, null=True)
     title = models.CharField(max_length=200)
-    property_type = models.CharField(
-        choices=PROPERTY_TYPE, max_length=9, blank=True, default='', null=True)
     property_address = models.CharField(max_length=200, blank=True, default='')
     neighborhood = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    price_range = IntegerRangeField(blank=True, null=True)
-    bedrooms = IntegerRangeField(blank=True, null=True)
-    bathrooms = models.DecimalField(max_digits=2, decimal_places=1)
+    property_type = models.CharField(
+        choices=PROPERTY_TYPE, max_length=9, blank=True, default='', null=True)
+    price_max = models.IntegerField(blank=True, null=True)
+    price_min = models.IntegerField(blank=True, null=True)
+    bedrooms_max = models.IntegerField(blank=True, null=True)
+    bedrooms_min = models.IntegerField(blank=True, null=True)
+    bathrooms_max = models.DecimalField(max_digits=2, decimal_places=1)
+    bathrooms_min = models.DecimalField(max_digits=2, decimal_places=1)
     garage = models.IntegerField(default=0)
-    one_bedroom_price = IntegerRangeField(blank=True, null=True)
-    two_bedroom_price = IntegerRangeField(blank=True, null=True)
-    three_bedroom_price = IntegerRangeField(blank=True, null=True)
-    four_bedroom_price = IntegerRangeField(blank=True, null=True)
-    five_bedroom_price = IntegerRangeField(blank=True, null=True)
     lease_length = MultiSelectField(
         choices=LEASE_LENGTH, max_choices=3, blank=True, default='', null=True)
     security = MultiSelectField(

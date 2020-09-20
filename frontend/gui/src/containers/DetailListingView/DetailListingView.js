@@ -25,6 +25,14 @@ const useStyles = makeStyles((theme) => ({
 
     heroSection: {
         marginTop: '5rem',
+    },
+
+    marginT: {
+        marginTop: theme.spacing(2)
+    },
+
+    icon: {
+        marginRight: theme.spacing(1)
     }
 }));
 
@@ -93,7 +101,7 @@ export default function DetailListingView(props) {
                                 {listing.property_address}
                             </Typography>
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item className={classes.marginT} xs={12}>
                             <Typography variant="h6">
                                 Property Description
                             </Typography>
@@ -101,57 +109,58 @@ export default function DetailListingView(props) {
                                 {listing.description}
                             </Typography>
                         </Grid>
+                        <Grid container className={classes.marginT} direction="row" align="start">
+                            <Grid item xs={6} md={4}>
+                                <Typography variant="h6" className={classes.title}>
+                                    <DescriptionIcon className={classes.icon} color="primary" />
+                            Lease Options
+                        </Typography>
+                                <ListItems data={leaseData} />
+                            </Grid>
+                            <Grid item xs={6} md={4}>
+                                <Typography variant="h6" className={classes.title}>
+                                    <FitnessCenterIcon className={classes.icon} color="primary" />
+                            Fitness & Recreation
+                        </Typography>
+                                <ListItems data={recreationData} />
+                            </Grid>
+                            <Grid item xs={6} md={4}>
+                                <Typography variant="h6" className={classes.title}>
+                                    <SecurityIcon className={classes.icon} color="primary" />
+                            Security
+                        </Typography>
+                                <ListItems data={securityData} />
+                            </Grid>
+                        </Grid>
+                        <Grid container direction="row" align="start">
+                            <Grid item xs={6} md={4}>
+                                <Typography variant="h6" className={classes.title}>
+                                    <WifiIcon className={classes.icon} color="primary" />
+                            Features
+                        </Typography>
+                                <ListItems data={featuresData} />
+                            </Grid>
+                            <Grid item xs={6} md={4}>
+                                <Typography variant="h6" className={classes.title}>
+                                    <RoomServiceIcon className={classes.icon} color="primary" />
+                            Services
+                        </Typography>
+                                <ListItems data={servicesData} />
+                            </Grid>
+                            <Grid item xs={6} md={4}>
+                                <Typography variant="h6" className={classes.title}>
+                                    <DirectionsCarIcon className={classes.icon} color="primary" />
+                            Parking
+                        </Typography>
+                                <ListItems data={parkingData} />
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item xs={12} md={5} align="start">
                         <ListingContactCard />
                     </Grid>
                 </Grid>
-                <Grid container direction="row" align="start">
-                    <Grid item xs={6} md={3}>
-                        <Typography variant="h6" className={classes.title}>
-                            <DescriptionIcon color="primary" />
-                            Lease Options
-                        </Typography>
-                        <ListItems data={leaseData} />
-                    </Grid>
-                    <Grid item xs={6} md={3}>
-                        <Typography variant="h6" className={classes.title}>
-                            <FitnessCenterIcon color="primary" />
-                            Fitness & Recreation
-                        </Typography>
-                        <ListItems data={recreationData} />
-                    </Grid>
-                    <Grid item xs={6} md={3}>
-                        <Typography variant="h6" className={classes.title}>
-                            <SecurityIcon color="primary" />
-                            Security
-                        </Typography>
-                        <ListItems data={securityData} />
-                    </Grid>
-                </Grid>
-                <Grid container direction="row" align="start">
-                    <Grid item xs={6} md={3}>
-                        <Typography variant="h6" className={classes.title}>
-                            <WifiIcon color="primary" />
-                            Features
-                        </Typography>
-                        <ListItems data={featuresData} />
-                    </Grid>
-                    <Grid item xs={6} md={3}>
-                        <Typography variant="h6" className={classes.title}>
-                            <RoomServiceIcon color="primary" />
-                            Services
-                        </Typography>
-                        <ListItems data={servicesData} />
-                    </Grid>
-                    <Grid item xs={6} md={3}>
-                        <Typography variant="h6" className={classes.title}>
-                            <DirectionsCarIcon color="primary" />
-                            Parking
-                        </Typography>
-                        <ListItems data={parkingData} />
-                    </Grid>
-                </Grid>
+
             </Container>
 
             {/* <Container className={classes.sectionPadding} maxWidth="md">

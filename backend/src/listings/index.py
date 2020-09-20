@@ -6,7 +6,8 @@ from .models import Listing
 
 @register(Listing)
 class ListingModelIndex(AlgoliaIndex):
-    fields = ('neighborhood', 'title', 'property_address', 'property_type')
+    fields = ('neighborhood', 'title', 'property_address',
+              'property_type', 'price_max', 'price_min', 'bedrooms_max', 'bedrooms_min', 'bathrooms_max', 'bathrooms_min', 'developer')
     geo_field = 'location'
     settings = {
         'searchableAttributes': ['neighborhood'],

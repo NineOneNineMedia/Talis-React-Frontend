@@ -20,6 +20,9 @@ import * as Yup from 'yup';
 import { LinearProgress } from '@material-ui/core';
 import * as actions from '../../store/actions/auth';
 import { withRouter, Redirect } from "react-router-dom";
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 
 
 function Copyright() {
@@ -62,6 +65,25 @@ const useStyles = makeStyles((theme) => ({
 
 function SignInForm(props, { loading, error }) {
     const classes = useStyles();
+    const responseGoogle = (response) => {
+        console.log(response);
+        const access_token = response.accessToken;
+        props.googleAuth(
+            access_token
+        );
+    }
+
+    const responseFacebook = (response) => {
+        console.log("Login Result", response);
+        const access_token = response.accessToken;
+        props.facebookAuth(
+            access_token
+        );
+    }
+
+    if (props.isAuthenticated) {
+        return <Redirect to="/" />;
+    }
 
     let errorMessage = null;
     if (error) {
@@ -70,9 +92,7 @@ function SignInForm(props, { loading, error }) {
         );
     }
 
-    if (props.isAuthenticated) {
-        return <Redirect to="/" />;
-    }
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -170,16 +190,49 @@ function SignInForm(props, { loading, error }) {
                                 >
                                     Sign In
                                 </Button>
-                                <Grid container>
-                                    <Grid item xs>
-                                        <Link href="#" variant="body2">
-                                            Forgot password?
-                                        </Link>
+                                <Grid container justify="center" spacing={2}>
+                                    <Grid item xs={9}>
+                                        <GoogleLogin
+                                            clientId="546087303051-a1j9lmu3d4i7m49qq5chv84qnlsgnrb3.apps.googleusercontent.com"
+                                            //buttonText="Sign in with Google"
+                                            redirectUri="http://127.0.0.1:8000/accounts/google/login/callback/"
+                                            responseType="id_token code"
+                                            accessType="offline"
+                                            onSuccess={responseGoogle}
+                                            onFailure={responseGoogle}
+                                            cookiePolicy={'single_host_origin'}
+                                            render={renderProps => (
+                                                <GoogleLoginButton style={{ width: '100%' }} align="center" onClick={renderProps.onClick}>
+                                                    <span>Sign in with Google</span>
+                                                </GoogleLoginButton>
+                                            )}
+                                        />
+                                        <FacebookLogin
+                                            appId="993355947742556"
+                                            fields="name,email,picture"
+                                            responseType="id_token code"
+                                            // onSuccess={responseFacebook}
+                                            // onFailure={responseFacebook}
+                                            callback={responseFacebook}
+                                            render={renderProps => (
+                                                <FacebookLoginButton style={{ width: '100%' }} align="center" onClick={renderProps.onClick}>
+                                                    <span>Sign in with Facebook</span>
+                                                </FacebookLoginButton>
+
+                                            )}
+                                        />
                                     </Grid>
-                                    <Grid item>
-                                        <Link href="/register" variant="body2">
-                                            {"Don't have an account? Sign Up"}
-                                        </Link>
+                                    <Grid container>
+                                        <Grid item xs>
+                                            <Link href="/register" variant="subtitle1">
+                                                {"Don't have an account? Sign Up"}
+                                            </Link>
+                                        </Grid>
+                                        <Grid item>
+                                            <Link href="#" variant="subtitle1">
+                                                Forgot password?
+                                            </Link>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </Form>
@@ -203,7 +256,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onAuth: (username, password) => dispatch(actions.authLogin(username, password))
+        onAuth: (username, password) => dispatch(actions.authLogin(username, password)),
+        googleAuth: (access_token) => dispatch(actions.authGoogleUser(access_token)),
+        facebookAuth: (access_token) => dispatch(actions.authFacebookUser(access_token)),
     }
 }
 

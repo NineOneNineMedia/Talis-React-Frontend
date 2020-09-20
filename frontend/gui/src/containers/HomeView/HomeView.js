@@ -10,12 +10,24 @@ import Footer from '../../components/Footer/Footer';
 import Button from '@material-ui/core/Button';
 import { Typography, Grid, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { authGoogleSignUp } from "../../store/actions/auth";
 
 
 const useStyles = makeStyles((theme) => ({
     sectionPadding: {
         paddingTop: theme.spacing(6),
         paddingBottom: theme.spacing(6)
+    },
+
+    bgColor: {
+        backgroundColor: 'light-grey'
+    },
+
+    displayText: {
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        paddingLeft: 30,
+        paddingRight: 30
     },
 
     heroSection: {
@@ -47,19 +59,21 @@ export default function HomeView() {
             <Container className={classes.heroSection} disableGutters maxWidth="false">
                 <Grid item xs={12} md={6}>
                     <Container disableGutters maxWidth="false">
-
                     </Container>
                 </Grid>
-
             </Container>
 
             <Container className={classes.sectionPadding} maxWidth="lg">
-                <Grid container direction="column" align="center">
+                <Grid container direction="column" align="center" spacing={4}>
                     <Grid item xs={12} >
                         <Typography variant="h4">
                             Latest Listings
                         </Typography>
+                    </Grid>
+                    <Grid item>
                         <ListingCards data={listings} />
+                    </Grid>
+                    <Grid item>
                         <Button variant="contained" color="primary" href="/listings">
                             View More
                         </Button>
@@ -68,8 +82,8 @@ export default function HomeView() {
             </Container>
 
             <Container className={classes.sectionPadding} maxWidth="md">
-                <Grid container direction="row" xs={12} spacing={0}>
-                    <Grid className={classes.icon} item xs={12} md={6} align="center" justify="center">
+                <Grid style={{ backgroundColor: '#D9D9D9' }} container direction="row" xs={12} spacing={0}>
+                    <Grid className={classes.displayText} item xs={12} md={6} align="start">
                         <Typography variant="h6">
                             Helping You Find the Perfect Fit
                             </Typography>
@@ -84,13 +98,13 @@ export default function HomeView() {
                         </Container>
                     </Grid>
                 </Grid>
-                <Grid container direction="row" xs={12} spacing={0}>
+                <Grid style={{ backgroundColor: '#D9D9D9' }} container direction="row" xs={12} spacing={0}>
                     <Grid item xs={12} md={6}>
                         <Container disableGutters maxWidth="false">
                             <img src={cardImg2} style={{ width: "100%", height: "auto" }} />
                         </Container>
                     </Grid>
-                    <Grid item xs={12} md={6} align="center">
+                    <Grid className={classes.displayText} item xs={12} md={6} align="start">
                         <Typography variant="h6">
                             Luxury at the Right Price
                             </Typography>
@@ -100,15 +114,15 @@ export default function HomeView() {
                             </Typography>
                     </Grid>
                 </Grid>
-                <Grid container direction="row" xs={12} spacing={0}>
-                    <Grid item xs={12} md={6} align="center">
+                <Grid style={{ backgroundColor: '#D9D9D9' }} container direction="row" xs={12} spacing={0}>
+                    <Grid className={classes.displayText} item xs={12} md={6} align="start" >
                         <Typography variant="h6">
                             Helping Investors Maximize Occupancy
                             </Typography>
                         <Typography variant="p">
                             orem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis
                             nam!
-                            </Typography>
+                        </Typography>
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Container disableGutters maxWidth="false">
@@ -127,6 +141,6 @@ export default function HomeView() {
                 </Grid>
             </Container>
             <Footer />
-        </div>
+        </div >
     )
 }

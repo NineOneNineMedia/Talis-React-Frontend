@@ -72,64 +72,65 @@ export default function HomeView() {
             </Container>
 
             <Container className={classes.sectionPadding} maxWidth="md">
-                <Grid container direction="row" xs={12}>
+                <Grid container direction="column" xs={12} spacing={3}>
                     <Grid item>
-                        <Typography variant="h4">
+                        <Typography variant="h4" align="start">
                             Talis Leadership
                         </Typography>
                     </Grid>
-                </Grid>
-                <Grid container direction="row" xs={12} spacing={3}>
-                    <Grid className={classes.icon} item xs={12} md={4} align="center" justify="center">
-                        <Card className={classes.root}>
-                            <CardMedia
-                                className={classes.media}
-                                image={businessman1}
-                                title="CEO"
-                            />
-                            <CardContent>
-                                <Typography variant="body2" component="h6">
-                                    Michael Smith
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="h4">
-                                    Cheif Executive Officer
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                    <Grid className={classes.icon} item xs={12} md={4} align="center" justify="center">
-                        <Card className={classes.root}>
-                            <CardMedia
-                                className={classes.media}
-                                image={businessman2}
-                                title="CEO"
-                            />
-                            <CardContent>
-                                <Typography variant="body2" component="h4">
-                                    Darrell Williams
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="h6">
-                                    Chief Financial Officer
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                    <Grid className={classes.icon} item xs={12} md={4} align="center" justify="center">
-                        <Card className={classes.root}>
-                            <CardMedia
-                                className={classes.media}
-                                image={businessman3}
-                                title="CEO"
-                            />
-                            <CardContent>
-                                <Typography variant="body2" component="h4">
-                                    Shawn Thompson
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="h6">
-                                    Vice President of Marketing
-                                </Typography>
-                            </CardContent>
-                        </Card>
+
+                    <Grid container direction="row" xs={12} spacing={3}>
+                        <Grid className={classes.icon} item xs={12} md={4} align="center" justify="center">
+                            <Card className={classes.root}>
+                                <CardMedia
+                                    className={classes.media}
+                                    image={businessman1}
+                                    title="CEO"
+                                />
+                                <CardContent>
+                                    <Typography variant="body2" component="h6">
+                                        Michael Smith
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="h4">
+                                        Cheif Executive Officer
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        <Grid className={classes.icon} item xs={12} md={4} align="center" justify="center">
+                            <Card className={classes.root}>
+                                <CardMedia
+                                    className={classes.media}
+                                    image={businessman2}
+                                    title="CEO"
+                                />
+                                <CardContent>
+                                    <Typography variant="body2" component="h4">
+                                        Darrell Williams
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="h6">
+                                        Chief Financial Officer
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                        <Grid className={classes.icon} item xs={12} md={4} align="center" justify="center">
+                            <Card className={classes.root}>
+                                <CardMedia
+                                    className={classes.media}
+                                    image={businessman3}
+                                    title="CEO"
+                                />
+                                <CardContent>
+                                    <Typography variant="body2" component="h4">
+                                        Shawn Thompson
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="h6">
+                                        Vice President of Marketing
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
                     </Grid>
                 </Grid>
             </Container >

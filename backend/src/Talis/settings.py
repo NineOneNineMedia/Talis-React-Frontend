@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
     'corsheaders',
     'rest_auth',
     'rest_auth.registration',
@@ -156,6 +157,10 @@ except ImportError:
 # API Keys
 # GOOGLE_MAPS_API_KEY = 'AIzaSyA74pXwEhuy0NdjcwPMzDSVHBic8oo6NSE'
 
+REST_AUTH_SERIALIZERS = {
+    'TOKEN_SERIALIZER': 'accounts.api.serializers.CustomTokenSerializer',
+}
+
 MAPBOX_KEY = "pk.eyJ1IjoibXhudW5sZXkxIiwiYSI6ImNrOTk1eWUwOTAzaTEzZHF3MzQxd3NlaTgifQ.VtOj8_k6ClIAFcvNwUAgRQ"
 
 REST_FRAMEWORK = {
@@ -180,7 +185,6 @@ ALGOLIA = {
 
 SITE_ID = 1
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_AUTHENTICATION_METHOD = 'username'

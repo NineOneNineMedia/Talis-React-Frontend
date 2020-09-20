@@ -22,6 +22,8 @@ import { Redirect } from "react-router-dom";
 import { authSuccess, authFail } from '../../store/actions/auth';
 import * as actions from '../../store/actions/auth';
 import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
 import axios from 'axios';
 
 
@@ -71,20 +73,14 @@ function SignUpForm(props, { loading, authFail }) {
         props.googleAuth(
             access_token
         );
-        // axios.post('http://127.0.0.1:8000/api/rest-auth/google/', {
-        //     access_token: token
-        // })
-        //     .then(res => {
-        //         const token = res.data.key;
-        //         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-        //         localStorage.setItem('token', token);
-        //         localStorage.setItem('expirationDate', expirationDate)
-        //         dispatch(props.authSuccess(token));
-        //         dispatch(props.checkAuthTimeout(3600));
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
+    }
+
+    const responseFacebook = (response) => {
+        console.log("Login Result", response);
+        const access_token = response.accessToken;
+        props.facebookAuth(
+            access_token
+        );
     }
 
     if (props.isAuthenticated) {
@@ -228,25 +224,42 @@ function SignUpForm(props, { loading, authFail }) {
                                 >
                                     Sign Up
                                 </Button>
-                                <Grid container justify="center">
-                                    <Grid item>
-                                        <Link href="/login" variant="body2">
-                                            Already have an account? Sign in
-                                        </Link>
-                                    </Grid>
-                                </Grid>
-                                <Grid container justify="center">
-                                    <Grid item>
+                                <Grid container justify="center" spacing={2}>
+                                    <Grid item xs={9}>
                                         <GoogleLogin
                                             clientId="546087303051-a1j9lmu3d4i7m49qq5chv84qnlsgnrb3.apps.googleusercontent.com"
-                                            buttonText="Sign in with Google"
+                                            //buttonText="Sign in with Google"
                                             redirectUri="http://127.0.0.1:8000/accounts/google/login/callback/"
                                             responseType="id_token code"
                                             accessType="offline"
                                             onSuccess={responseGoogle}
                                             onFailure={responseGoogle}
                                             cookiePolicy={'single_host_origin'}
+                                            render={renderProps => (
+                                                <GoogleLoginButton style={{ width: '100%' }} align="center" onClick={renderProps.onClick}>
+                                                    <span>Sign up with Google</span>
+                                                </GoogleLoginButton>
+                                            )}
                                         />
+                                        <FacebookLogin
+                                            appId="993355947742556"
+                                            fields="name,email,picture"
+                                            responseType="id_token code"
+                                            // onSuccess={responseFacebook}
+                                            // onFailure={responseFacebook}
+                                            callback={responseFacebook}
+                                            render={renderProps => (
+                                                <FacebookLoginButton style={{ width: '100%' }} align="center" onClick={renderProps.onClick}>
+                                                    <span>Sign up with Facebook</span>
+                                                </FacebookLoginButton>
+
+                                            )}
+                                        />
+                                    </Grid>
+                                    <Grid item>
+                                        <Link href="/login" variant="h6">
+                                            Already have an account? Sign in
+                                        </Link>
                                     </Grid>
                                 </Grid>
                             </Form>
@@ -271,7 +284,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => {
     return {
         onAuth: (username, email, password1, password2) => dispatch(actions.authSignUp(username, email, password1, password2)),
-        googleAuth: (access_token) => dispatch(actions.authGoogleSignUp(access_token)),
+        googleAuth: (access_token) => dispatch(actions.authGoogleUser(access_token)),
+        facebookAuth: (access_token) => dispatch(actions.authFacebookUser(access_token)),
     }
 }
 

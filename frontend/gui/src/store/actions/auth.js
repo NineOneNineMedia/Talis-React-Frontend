@@ -7,10 +7,12 @@ export const authStart = () => {
     }
 }
 
-export const authSuccess = token => {
+export const authSuccess = (token, userId, profile) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
-        token: token
+        token: token,
+        userId: userId,
+        profile: profile,
     }
 }
 
@@ -45,9 +47,12 @@ export const authLogin = (username, password) => {
             password: password
         })
             .then(res => {
+                console.log(res)
                 const token = res.data.key;
+                const userId = res.data.user.id;
                 const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
                 localStorage.setItem('token', token);
+                localStorage.setItem('userId', userId);
                 localStorage.setItem('expirationDate', expirationDate)
                 dispatch(authSuccess(token));
                 dispatch(checkAuthTimeout(3600));
@@ -68,9 +73,12 @@ export const authSignUp = (username, email, password1, password2) => {
             password2: password2,
         })
             .then(res => {
+                console.log(res)
                 const token = res.data.key;
+                const userId = res.data.user.id;
                 const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
                 localStorage.setItem('token', token);
+                localStorage.setItem('userId', userId);
                 localStorage.setItem('expirationDate', expirationDate)
                 dispatch(authSuccess(token));
                 dispatch(checkAuthTimeout(3600));
@@ -81,16 +89,42 @@ export const authSignUp = (username, email, password1, password2) => {
     }
 }
 
-export const authGoogleSignUp = (access_token) => {
+export const authGoogleUser = (access_token) => {
     return dispatch => {
         dispatch(authStart());
         axios.post('http://127.0.0.1:8000/api/rest-auth/google/', {
             access_token: access_token
         })
             .then(res => {
+                console.log(res)
                 const token = res.data.key;
+                const userId = res.data.user.id;
                 const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
                 localStorage.setItem('token', token);
+                localStorage.setItem('userId', userId);
+                localStorage.setItem('expirationDate', expirationDate)
+                dispatch(authSuccess(token));
+                dispatch(checkAuthTimeout(3600));
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+}
+
+export const authFacebookUser = (access_token) => {
+    return dispatch => {
+        dispatch(authStart());
+        axios.post('http://127.0.0.1:8000/api/rest-auth/facebook/', {
+            access_token: access_token,
+        })
+            .then(res => {
+                console.log(res)
+                const token = res.data.key;
+                const userId = res.data.user.id;
+                const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+                localStorage.setItem('token', token);
+                localStorage.setItem('userId', userId);
                 localStorage.setItem('expirationDate', expirationDate)
                 dispatch(authSuccess(token));
                 dispatch(checkAuthTimeout(3600));
@@ -104,6 +138,7 @@ export const authGoogleSignUp = (access_token) => {
 export const authCheckState = () => {
     return dispatch => {
         const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId');
         if (token === undefined) {
             dispatch(logout());
         } else {
@@ -111,7 +146,7 @@ export const authCheckState = () => {
             if (expirationDate <= new Date()) {
                 dispatch(logout())
             } else {
-                dispatch(authSuccess(token));
+                dispatch(authSuccess(token, userId));
                 dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
             }
         }

@@ -9,6 +9,7 @@ urlpatterns = [
     path('listings/', include('listings.urls')),
     path('admin/', admin.site.urls),
     path('contacts/', include('contacts.urls')),
+    path('api/rest-auth/facebook/', views.FacebookLogin.as_view(), name='fb_login'),
     path('api/rest-auth/google/', views.GoogleLogin.as_view(), name='google_login'),
     path('api/accounts/', include('allauth.urls')),
     path('api/auth/', include('rest_framework.urls')),
@@ -16,5 +17,5 @@ urlpatterns = [
     path('api/rest-auth/registration/', include('rest_auth.registration.urls')),
     path('api/pages/', include('pages.api.urls')),
     path('api/listings/', include('listings.api.urls')),
-    path('api/contacts/', include('contacts.api.urls'))
+    path('api/profiles/', include('accounts.api.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

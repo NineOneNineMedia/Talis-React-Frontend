@@ -19,10 +19,10 @@ export default function ListingCards(props) {
     const classes = useStyles();
 
     return (
-        <Grid container direction="row" xs={12} spacing={3} justify="center">
+        <Grid container direction="row" xs={12} spacing={2} justify="space-between">
             {props.data.map((data) => {
                 return (
-                    <Grid item xs={12} md={6} lg={3}>
+                    <Grid item xs={12} md={3} lg={3}>
                         <a href={`/listings/${data.id}`}>
                             <Card key={data.id} className={classes.root}>
                                 <CardActionArea>
@@ -43,16 +43,11 @@ export default function ListingCards(props) {
                                         <Typography variant="subtitle2" color="textSecondary" component="p" align="center">
                                             {data.property_address}
                                         </Typography>
+                                        <Typography variant="subtitle2" color="textSecondary" component="p" align="center">
+                                            {data.bedrooms_min}-{data.bedrooms_max}Bedrooms | ${data.price_min}-${data.price_max}
+                                        </Typography>
                                     </CardContent>
                                 </CardActionArea>
-                                <CardActions>
-                                    <Button size="small" color="primary">
-                                        Share
-                                </Button>
-                                    <Button size="small" color="primary">
-                                        Learn More
-                                </Button>
-                                </CardActions>
                             </Card>
                         </a>
 

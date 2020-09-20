@@ -9,7 +9,7 @@ const ListingsFooter = () => {
     return (
         <div>
             <footer className="footer">
-                <Container className="text-white py-5">
+                <Container className="text-white py-5 mx-3">
                     <Row>
                         <Col xs={12} className="about-company">
                             <a className="navbar-brand" href="{% url 'index' %}">

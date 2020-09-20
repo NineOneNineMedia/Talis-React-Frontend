@@ -36,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
     },
     listingForm: {
         minHeight: '3rem',
-        padding: 0
+        padding: 0,
+        paddingLeft: theme.spacing(3)
     },
     listingPage: {
         paddingRight: 0,
@@ -47,8 +48,11 @@ const useStyles = makeStyles((theme) => ({
     },
     pagination: {
         marginBottom: theme.spacing(2)
+    },
+    map: {
+        height: '100%',
+        marginLeft: theme.spacing(3)
     }
-
 }));
 
 export default function ListingView() {
@@ -61,7 +65,7 @@ export default function ListingView() {
                 indexName="TalisTest_test_LISTING_dev"
                 searchClient={searchClient}
             >
-                <Container disableGutters maxWidth="lg" style={{ marginTop: "4.5rem", padding: 0 }}>
+                <Container disableGutters maxWidth="false" style={{ marginTop: "4.5rem", padding: 0 }}>
                     {/* <Form className="listings-form"> */}
                     <Grid container direction="row" xs={12} className={classes.listingForm}>
                         <CustomSearchBox />
@@ -98,20 +102,16 @@ export default function ListingView() {
                     {/* </Form> */}
                 </Container>
 
-                <Container disableGutters maxWidth="lg">
-                    <Grid container direction xs={12}>
-                        <Grid item md={5} className={classes.listingPage} /* className="pr-0 listings-page" */>
-                            <CustomHits />
-                            <Pagination showNext={true} showPrevious={true} showLast={true} className={classes.pagination} /* className="mb-3" */ />
-                            <ListingsFooter />
-                        </Grid>
-                        <Grid item md={7} /* className="pl-0" */>
-                            <div style={{ height: "100%" }}>
-                                {/* <GoogleMapsLoader apiKey="AIzaSyC00vQGfJ3FNZ2oM-GkUMT4vYJOxyXQv64">
+                <Container disableGutters maxWidth="false">
+                    <Grid container direction="row" xs={12} >
+                        <Grid item md={6} >
+                            <div className={classes.map}>
+                                <GoogleMapsLoader apiKey="AIzaSyC00vQGfJ3FNZ2oM-GkUMT4vYJOxyXQv64">
                                     {google => (
                                         <GeoSearch
                                             google={google}
                                             initialZoom={10}
+
                                             initialPosition={{
                                                 lat: 5.55602,
                                                 lng: -0.1969,
@@ -126,9 +126,14 @@ export default function ListingView() {
                                             )}
                                         </GeoSearch>
                                     )}
-                                </GoogleMapsLoader> */}
+                                </GoogleMapsLoader>
                             </div>
                             {/* <ListingsMap /> */}
+                        </Grid>
+                        <Grid item md={6} className={classes.listingPage} /* className="pr-0 listings-page" */>
+                            <CustomHits />
+                            <Pagination showNext={true} showPrevious={true} showLast={true} className={classes.pagination} /* className="mb-3" */ />
+                            <ListingsFooter />
                         </Grid>
                     </Grid>
                 </Container>

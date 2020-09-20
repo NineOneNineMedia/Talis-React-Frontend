@@ -17,7 +17,8 @@ function ListItemLink(props) {
 const useStyles = makeStyles((theme) => ({
     footer: {
         backgroundColor: "#000",
-        padding: theme.spacing(5)
+        padding: theme.spacing(5),
+        textAlign: "center"
     },
     logo: {
         width: 'auto',
@@ -27,7 +28,8 @@ const useStyles = makeStyles((theme) => ({
         color: "#fff",
     },
     links: {
-        padding: 0
+        padding: 0,
+        textAlign: "center"
     },
     divide: {
         backgroundColor: "#303030"
@@ -40,65 +42,65 @@ export default function Footer(props) {
 
     return (
         <footer className={classes.footer}>
-            <Grid container direction="column" spacing={2}>
-                <Grid item xs={12} container>
-                    <Grid item xs={12} md={4}>
-                        <Typography className={classes.textColor} component="div">
-                            <img
-                                className={classes.logo}
-                                src={
-                                    TalisLogo
-                                }
-                                alt="Talis Logo"
-                            />
-                            <Box lineHeight="normal" m={1}>
-                                Transparent, honest, and sincere property management services for residential and commercial properties
+            <Grid container direction="row" spacing={2} align="center" justify="space-evenly" maxWidth="md">
+
+                <Grid item xs={12} md={3}>
+                    <Typography className={classes.textColor} component="div">
+                        <img
+                            className={classes.logo}
+                            src={
+                                TalisLogo
+                            }
+                            alt="Talis Logo"
+                        />
+                        <Box lineHeight="normal" m={1}>
+                            Transparent, honest, and sincere property management services for residential and commercial properties
                             </Box>
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={3}>
-                        <Typography className={classes.textColor} component="div">
-                            <Typography variant="h6">
-                                Neighborhoods
-                            </Typography>
-                            <ListItemLink className={classes.links} href="#simple-list">
-                                <ListItemText primary="Airport" />
-                            </ListItemLink>
-                            <ListItemLink className={classes.links} href="#simple-list">
-                                <ListItemText primary="Cantonments" />
-                            </ListItemLink>
-                            <ListItemLink className={classes.links} href="#simple-list">
-                                <ListItemText primary="Dzorwulu" />
-                            </ListItemLink>
-                            <ListItemLink className={classes.links} href="#simple-list">
-                                <ListItemText primary="East Legon" />
-                            </ListItemLink>
-                            <ListItemLink className={classes.links} href="#simple-list">
-                                <ListItemText primary="Labone" />
-                            </ListItemLink>
-                            <ListItemLink className={classes.links} href="#simple-list">
-                                <ListItemText primary="Roman Ridge" />
-                            </ListItemLink>
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <Typography className={classes.textColor} varaint="h6">
-                            Location
-                        </Typography>
-                        <Typography className={classes.textColor} varaint="p">
-                            8 Sir Arku Korsah Rd
-                        </Typography>
-                        <Typography className={classes.textColor} varaint="p">
-                            Airport, Accra, Ghana
-                        </Typography>
-                        <Typography className={classes.textColor} varaint="p">
-                            +233 302 798 692
-                        </Typography>
-                        <Typography className={classes.textColor} varaint="p">
-                            info@talispropertyservices.com
-                        </Typography>
-                    </Grid>
+                    </Typography>
                 </Grid>
+                <Grid item xs={12} md={2}>
+                    <Typography className={classes.textColor} component="div">
+                        <Typography variant="h6">
+                            Neighborhoods
+                            </Typography>
+                        <ListItemLink className={classes.links} href="#simple-list">
+                            <ListItemText primary="Airport" />
+                        </ListItemLink>
+                        <ListItemLink className={classes.links} href="#simple-list">
+                            <ListItemText primary="Cantonments" />
+                        </ListItemLink>
+                        <ListItemLink className={classes.links} href="#simple-list">
+                            <ListItemText primary="Dzorwulu" />
+                        </ListItemLink>
+                        <ListItemLink className={classes.links} href="#simple-list">
+                            <ListItemText primary="East Legon" />
+                        </ListItemLink>
+                        <ListItemLink className={classes.links} href="#simple-list">
+                            <ListItemText primary="Labone" />
+                        </ListItemLink>
+                        <ListItemLink className={classes.links} href="#simple-list">
+                            <ListItemText primary="Roman Ridge" />
+                        </ListItemLink>
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} md={2}>
+                    <Typography className={classes.textColor} varaint="h6">
+                        Location
+                        </Typography>
+                    <Typography className={classes.textColor} varaint="p">
+                        8 Sir Arku Korsah Rd
+                        </Typography>
+                    <Typography className={classes.textColor} varaint="p">
+                        Airport, Accra, Ghana
+                        </Typography>
+                    <Typography className={classes.textColor} varaint="p">
+                        +233 302 798 692
+                        </Typography>
+                    <Typography className={classes.textColor} varaint="p">
+                        info@talispropertyservices.com
+                        </Typography>
+                </Grid>
+
                 <Divider className={classes.divide} />
                 <Grid item xs={12} container>
                     <Grid item xs={12}>

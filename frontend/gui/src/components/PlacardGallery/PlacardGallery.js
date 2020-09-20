@@ -1,5 +1,8 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import ImageGallery from 'react-image-gallery';
+import IconButton from '@material-ui/core/IconButton';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import "react-image-gallery/styles/scss/image-gallery.scss";
 
 
@@ -18,15 +21,33 @@ const images = [
     },
 ];
 
-class PlacardGallery extends React.Component {
-    render() {
-        return <ImageGallery
-            items={images}
-            showThumbnails={false}
-            showFullscreenButton={false}
-            showPlayButton={false}
-            showIndex={false} />;
-    }
-}
+const useStyles = makeStyles({
+    root: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        zIndex: 100
+    },
+});
 
-export default PlacardGallery
+export default function PlacardGallery() {
+    const classes = useStyles();
+    function renderCustom() {
+        return (
+            <IconButton className={classes.root} aria-label="delete">
+                <FavoriteBorderIcon fontSize="default" color="primary" />
+            </IconButton>
+        )
+    }
+
+
+    return (<ImageGallery
+        items={images}
+        showThumbnails={false}
+        showFullscreenButton={false}
+        showPlayButton={false}
+        showIndex={false}
+        renderCustomControls={renderCustom} />
+    )
+
+}

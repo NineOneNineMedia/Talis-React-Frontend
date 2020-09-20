@@ -31,7 +31,7 @@ body {
 }
 
 .back-btn {
-  background-color: #00a3b0;
+  background-color: #00A3B0;
   color: white;
   height: 100%;
   padding: 1rem 1.5rem;
@@ -170,7 +170,7 @@ img {
 
 .zoom:hover {
   transform: scale(1.1); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-  border: 1px solid #00a3b0;
+  border: 1px solid #00A3B0;
   transition: all .2s;
   text-decoration: none;
 }
@@ -283,5 +283,5 @@ a:hover {
 }
 
 #imgCarousel .carousel-indicators li.active img {
-  border: 1px solid #00a3b0;
+  border: 1px solid #00A3B0;
 }
