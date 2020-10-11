@@ -77,6 +77,7 @@ export default function ListingView() {
           <Grid container direction="row" xs={12} className={classes.listingForm}>
             <CustomSearchBox />
             <PriceNumericMenu
+              attribute="price_min"
               items={[
                 { label: "$1000", end: 1000 },
                 { label: "$2000", end: 2000 },
@@ -86,11 +87,12 @@ export default function ListingView() {
               ]}
             />
             <BedsNumericMenu
+              attribute="bedrooms_max"
               items={[
-                { label: "1+", start: 1 },
-                { label: "2+", start: 2 },
-                { label: "3+", start: 3 },
-                { label: "4+", start: 4 },
+                { label: "1", end: 1 },
+                { label: "2", end: 2 },
+                { label: "3", end: 3 },
+                { label: "4", end: 4 },
               ]}
             />
 

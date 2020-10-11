@@ -113,15 +113,15 @@ function FavoriteListingsView(props) {
         <Toolbar />
         <div className={classes.drawerContainer}>
           <List>
-            <ListItem>
+            {/* <ListItem>
               <Grid container direction="column" align="center">
                 <Grid item>
                   <Avatar variant="square">N</Avatar>
                   <Typography>User Name</Typography>
                 </Grid>
               </Grid>
-            </ListItem>
-            <Divider className={classes.divder} />
+            </ListItem> 
+            <Divider className={classes.divder} />*/}
             <Link href="/myTalis/profile">
               <ListItem button>
                 <ListItemIcon>
@@ -157,62 +157,66 @@ function FavoriteListingsView(props) {
         <Toolbar />
         <Typography h1>Favorite Listings</Typography>
         <hr />
-        <Grid container direction="row" xs={12} spacing={2}>
-          {listings.map((listing) => {
-            return (
-              <Grid item xs={12} md={3} lg={3}>
-                <a href={`/listings/${listing.id}`}>
-                  <Card key={listing.id} className={classes.root}>
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        alt="Contemplative Reptile"
-                        height="200"
-                        image={listing.photo_main}
-                        title="Contemplative Reptile"
-                      />
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          variant="h6"
-                          component="h2"
-                          align="center"
-                        >
-                          {listing.title}
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          color="textSecondary"
-                          component="p"
-                          align="center"
-                        >
-                          {listing.neighborhood}
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          color="textSecondary"
-                          component="p"
-                          align="center"
-                        >
-                          {listing.property_address}
-                        </Typography>
-                        <Typography
-                          variant="subtitle2"
-                          color="textSecondary"
-                          component="p"
-                          align="center"
-                        >
-                          {listing.bedrooms_min}-{listing.bedrooms_max}Bedrooms | $
-                          {listing.price_min}-${listing.price_max}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </a>
-              </Grid>
-            );
-          })}
-        </Grid>
+        {listings.length > 0 ? (
+          <Grid container direction="row" align="center" xs={12} spacing={2}>
+            {listings.map((listing) => {
+              return (
+                <Grid item xs={12} md={3} lg={3}>
+                  <a href={`/listings/${listing.id}`}>
+                    <Card key={listing.id} className={classes.root}>
+                      <CardActionArea>
+                        <CardMedia
+                          component="img"
+                          alt="Contemplative Reptile"
+                          height="200"
+                          image={listing.photo_main}
+                          title="Contemplative Reptile"
+                        />
+                        <CardContent>
+                          <Typography
+                            gutterBottom
+                            variant="h6"
+                            component="h2"
+                            align="center"
+                          >
+                            {listing.title}
+                          </Typography>
+                          <Typography
+                            variant="subtitle2"
+                            color="textSecondary"
+                            component="p"
+                            align="center"
+                          >
+                            {listing.neighborhood}
+                          </Typography>
+                          <Typography
+                            variant="subtitle2"
+                            color="textSecondary"
+                            component="p"
+                            align="center"
+                          >
+                            {listing.property_address}
+                          </Typography>
+                          <Typography
+                            variant="subtitle2"
+                            color="textSecondary"
+                            component="p"
+                            align="center"
+                          >
+                            {listing.bedrooms_min}-{listing.bedrooms_max}Bedrooms | $
+                            {listing.price_min}-${listing.price_max}
+                          </Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </a>
+                </Grid>
+              );
+            })}
+          </Grid>
+        ) : (
+          <Typography h1>You have not saved any listings</Typography>
+        )}
       </main>
     </div>
   );

@@ -8,7 +8,6 @@ import {
   AppBar,
   Button,
   Drawer,
-  InputLabel,
   Typography,
   TextField,
   Grid,
@@ -50,24 +49,91 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  input: {
+    display: "none",
+  },
+  profileImg: {
+    width: 150,
+    height: 150,
+    border: "5 dashed red",
+  },
 }));
 
 function ProfileView(props) {
   const classes = useStyles();
-  const [profile, setProfile] = useState([]);
+  const [profile, setProfile] = useState({
+    fullName: "",
+    phoneNumber: "",
+    location: "",
+    //profileImage: null,
+  });
 
   const getUserProfile = async () => {
     await axios
-      .get(`http://127.0.0.1:8000/api/profiles/profile/${props.userId}`)
+      .get(`http://127.0.0.1:8000/api/profiles/profile/${props.userId}`, {
+        headers: {
+          Authorization: `Token ${props.token}`,
+        },
+      })
       .then((res) => {
-        console.log(res.data);
-        setProfile(res.data);
+        const data = res.data;
+        setProfile({
+          fullName: data.full_name,
+          phoneNumber: data.phone_number,
+          location: data.location,
+          //profileImage: data.profile_image,
+        });
       });
   };
 
   useEffect(() => {
     getUserProfile();
   }, [props]);
+
+  const handleChange = (event) => {
+    const val = event.target.value;
+    setProfile({
+      ...profile,
+      [event.target.name]: val,
+    });
+  };
+
+  const mySubmitHandler = (event) => {
+    event.preventDefault();
+    //alert(profile.fullName + " " + profile.phoneNumber);
+    let data = new FormData();
+    data.append("full_name", profile.fullName);
+    data.append("phone_number", profile.phoneNumber);
+    data.append("location", profile.location);
+    console.log(data);
+    axios
+      .put(
+        `http://127.0.0.1:8000/api/profiles/profile/${props.userId}`,
+        data,
+        // {
+        //   full_name: profile.fullName,
+        //   phone_number: profile.phoneNumber,
+        //   location: profile.location,
+        //   profile_image: profile.profileImage,
+        // },
+        {
+          headers: {
+            Authorization: `Token ${props.token}`,
+          },
+        }
+      )
+      .then((res) => {
+        const data = res.data;
+        console.log(data);
+        setProfile({
+          fullName: data.full_name,
+          phoneNumber: data.phone_number,
+          location: data.location,
+        });
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className={classes.root}>
@@ -83,15 +149,15 @@ function ProfileView(props) {
         <Toolbar />
         <div className={classes.drawerContainer}>
           <List>
-            <ListItem>
+            {/* <ListItem>
               <Grid container direction="column" align="center">
                 <Grid item>
                   <Avatar variant="square">N</Avatar>
-                  <Typography>User Name</Typography>
+                  <Typography>{profile.fullName}</Typography>
                 </Grid>
               </Grid>
             </ListItem>
-            <Divider className={classes.divder} />
+            <Divider className={classes.divder} /> */}
             <Link href="/myTalis/profile">
               <ListItem button>
                 <ListItemIcon>
@@ -127,55 +193,95 @@ function ProfileView(props) {
         <Toolbar />
         <Typography h1>PROFILE</Typography>
         <hr />
-        <Grid container direction="row" align="center">
-          <Grid item direction="column" xs={12} md={4} align="start">
-            <Avatar variant="square" className={classes.square}>
-              N
-            </Avatar>
-            <Typography>Upload Profile Photo</Typography>
+        <form onSubmit={mySubmitHandler}>
+          <Grid container direction="row" align="center">
+            {/* <Grid item direction="column" xs={12} md={4} align="start">
+              <Avatar
+                variant="square"
+                src={profile.profileImage}
+                className={classes.profileImg}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                name="image"
+                className={classes.input}
+                id="upload"
+                onChange={handleImageChange}
+              />
+              <label htmlFor="upload">
+                <Button color="primary" component="span">
+                  Upload Image
+                </Button>
+              </label>
+            </Grid> */}
+            <Grid
+              container
+              item
+              direction="column"
+              xs={12}
+              md={8}
+              align="start"
+              spacing={2}
+            >
+              <Grid item>
+                <Typography>Email</Typography>
+                <Typography>user@mail.com Edit</Typography>
+              </Grid>
+              <Grid item>
+                <Typography>Password</Typography>
+                <Typography>******* Edit</Typography>
+              </Grid>
+              <Grid item>
+                <Typography>Full Name</Typography>
+                <TextField
+                  fullWidth
+                  size="small"
+                  id="outlined-secondary"
+                  variant="outlined"
+                  color="primary"
+                  name="fullName"
+                  value={profile.fullName}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item>
+                <Typography>Phone Number</Typography>
+                <TextField
+                  fullWidth
+                  size="small"
+                  id="outlined-secondary"
+                  variant="outlined"
+                  color="primary"
+                  name="phoneNumber"
+                  value={profile.phoneNumber}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item>
+                <Typography>Location</Typography>
+                <TextField
+                  fullWidth
+                  size="small"
+                  id="outlined-secondary"
+                  variant="outlined"
+                  color="primary"
+                  name="location"
+                  value={profile.location}
+                  onChange={handleChange}
+                />
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item direction="column" xs={12} md={8} align="start">
-            <Typography>Email</Typography>
-            <Typography>user@mail.com Edit</Typography>
-            <Typography>Password</Typography>
-            <Typography>******* Edit</Typography>
-            <InputLabel>Full Name</InputLabel>
-            <TextField
-              fullWidth
-              size="small"
-              id="outlined-secondary"
-              variant="outlined"
-              color="secondary"
-              value={profile.full_name}
-            />
-            <InputLabel>Phone Number</InputLabel>
-            <TextField
-              fullWidth
-              size="small"
-              id="outlined-secondary"
-              variant="outlined"
-              color="secondary"
-              value={profile.phone_number}
-            />
-            <InputLabel>Location</InputLabel>
-            <TextField
-              fullWidth
-              size="small"
-              id="outlined-secondary"
-              variant="outlined"
-              color="secondary"
-              value={profile.location}
-            />
+          <hr />
+          <Grid container direction="row" justify="flex-end">
+            <Grid item>
+              <Button variant="contained" color="primary" size="large" type="submit">
+                SAVE
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
-        <hr />
-        <Grid container direction="row" justify="flex-end">
-          <Grid item>
-            <Button variant="contained" color="primary" size="large">
-              SAVE
-            </Button>
-          </Grid>
-        </Grid>
+        </form>
       </main>
     </div>
   );
