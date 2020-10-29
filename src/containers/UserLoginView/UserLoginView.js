@@ -1,23 +1,17 @@
 import React from "react";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-} from "react-router-dom";
-import SignInForm from '../../components/SignInForm/SignInForm'
-import SignUpForm from '../../components/SignUpForm/SignUpForm'
-
+import { Switch, Route } from "react-router-dom";
+import SignInForm from "../../components/SignInForm/SignInForm";
+import SignUpForm from "../../components/SignUpForm/SignUpForm";
 
 export default function CenteredTabs() {
-
-    return (
-        <Switch>
-            <Route path="/login">
-                <SignInForm />
-            </Route>
-            <Route path="/register">
-                <SignUpForm />
-            </Route>
-        </Switch>
-    );
+  return (
+    <Switch>
+      <Route path="/login">
+        <SignInForm />
+      </Route>
+      <Route path="/register">
+        <SignUpForm />
+      </Route>
+    </Switch>
+  );
 }

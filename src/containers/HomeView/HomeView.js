@@ -10,7 +10,6 @@ import Footer from "../../components/Footer/Footer";
 import Button from "@material-ui/core/Button";
 import { Typography, Grid, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { authGoogleSignUp } from "../../store/actions/auth";
 
 const useStyles = makeStyles((theme) => ({
   sectionPadding: {

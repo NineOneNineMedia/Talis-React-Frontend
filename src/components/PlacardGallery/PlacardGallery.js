@@ -24,6 +24,9 @@ import { connect } from "react-redux";
 
 const useStyles = makeStyles({
   root: {
+    height: "100%",
+  },
+  favoriteIcon: {
     position: "absolute",
     top: 0,
     right: 0,
@@ -69,7 +72,7 @@ function PlacardGallery(props) {
 
   function renderCustom() {
     return (
-      <IconButton className={classes.root} aria-label="delete">
+      <IconButton className={classes.favoriteIcon} aria-label="delete">
         <FavoriteBorderIcon fontSize="default" color="primary" onClick={addToFav} />
       </IconButton>
     );
@@ -78,6 +81,7 @@ function PlacardGallery(props) {
   return (
     <ImageGallery
       styles={{ zIndex: 10 }}
+      className={classes.root}
       items={images}
       showThumbnails={false}
       showFullscreenButton={false}

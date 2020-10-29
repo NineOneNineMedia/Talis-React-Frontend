@@ -25,12 +25,19 @@ import { CardMedia } from "@material-ui/core";
 import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  listingCard: {
     maxWidth: "100%",
     borderRadius: "15px",
     marginBottom: theme.spacing(2),
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
+    border: "2px solid rgba(151,151,151,.2)",
+    boxShadow: "0 2px 3px 0 rgba(0,0,0,.05)",
+    "&:hover": {
+      border: "2px solid #00A3B0",
+      boxShadow: "0 3px 10px 0 rgba(0,0,0,.25)",
+      transition: "border ease-in .1s",
+    },
   },
   cardHeader: {
     backgroundColor: theme.palette.primary.main,
@@ -52,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "50%",
   },
   button: {
-    marginTop: theme.spacing(5),
     width: "100%",
   },
   buttonPadding: {
@@ -66,117 +72,46 @@ function Hits({ hits }) {
   return (
     <ol>
       {hits.map((hit) => (
-        <Card className={classes.root}>
-          {/* <Link underline="none" component="a" color="textPrimary" href={`/listings/${hit.objectID}`}>
-                        <CardHeader
-                            title={hit.title}
-                            subheader={hit.property_address}
-                            className={classes.cardHeader}
-                        />
-                    </Link>
-                    <div className={classes.cardContent}>
-                        <CardMedia className={classes.media}>
-                            <PlacardGallery />
-                        </CardMedia>
-                        <div className={classes.details}>
-                            <CardContent className={classes.content}>
-                                <Typography variant="subtitle1" >
-                                    Available Now
-                                </Typography>
-                                <Typography variant="subtitle1" >
-                                    {hit.price_range.lower}
-                                </Typography>
-                                <Typography variant="subtitle1" >
-                                    Bedrooms
-                                </Typography>
-                                <Typography variant="subtitle1" >
-                                    Telephone #
-                                </Typography>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                    startIcon={<EmailIcon />}
-                                >
-                                    Email
-                                </Button>
-                            </CardContent>
-                        </div>
-                    </div> */}
-
-          <Grid container direction="row">
-            <Grid item xs={12} md={6}>
-              <PlacardGallery images={hit.photo_main} listing={hit.objectID} />
-            </Grid>
-            <Grid item container xs={12} md={6}>
-              <CardContent className={classes.content}>
-                <Link
-                  underline="none"
-                  component="a"
-                  color="textPrimary"
-                  href={`/listings/${hit.objectID}`}
-                >
-                  <Typography variant="h5">{hit.title}</Typography>
-                  <Typography variant="subtitle1">{hit.property_address}</Typography>
-                  <Typography variant="subtitle1">Available Now</Typography>
-                  <Typography variant="subtitle1">
-                    ${hit.price_min} - ${hit.price_max}
-                  </Typography>
-                  <Typography variant="subtitle1">
-                    {hit.bedrooms_min} - {hit.bedrooms_max} Bedrooms
-                  </Typography>
-                </Link>
-              </CardContent>
-              <Grid container className={classes.buttonPadding} spacing={2}>
-                <Grid item xs={4}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    startIcon={<PhoneIcon />}
-                  >
-                    Call
-                  </Button>
-                </Grid>
-                <Grid item xs={4}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    startIcon={<EmailIcon />}
-                  >
-                    Email
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
+        <Card className={classes.listingCard}>
+          <CardMedia>
+            <PlacardGallery images={hit.photo_main} listing={hit.objectID} />
+          </CardMedia>
+          <CardContent className={classes.content}>
+            <Link
+              className={classes.hover}
+              color="textPrimary"
+              href={`/listings/${hit.objectID}`}
+            >
+              <Typography variant="h5">{hit.title}</Typography>
+              <Typography variant="subtitle1">{hit.property_address}</Typography>
+              <Typography variant="subtitle1">Available Now</Typography>
+              <Typography variant="subtitle1">
+                ${hit.price_min} - ${hit.price_max}
+              </Typography>
+              <Typography variant="subtitle1">
+                {hit.bedrooms_min} - {hit.bedrooms_max} Bedrooms
+              </Typography>
+            </Link>
+          </CardContent>
+          <CardActions>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              startIcon={<PhoneIcon />}
+            >
+              Call
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              startIcon={<EmailIcon />}
+            >
+              Email
+            </Button>
+          </CardActions>
         </Card>
-        // <Card key={hit.id} className="mb-2">
-        //     <a href={`/listings/${hit.objectID}`}>
-        //         <Card.Header>
-        //             <Row>
-        //                 <Col sm={9}>
-        //                     <Row>{hit.title}</Row>
-        //                     <Row>{hit.address}</Row>
-        //                 </Col>
-        //                 {/* <Col sm={3}>{data.developer}</Col> */}
-        //             </Row>
-        //         </Card.Header>
-        //     </a>
-        //     <Card.Body className="p-0">
-        //         <Row>
-        //             <Col sm={8}>
-        //                 <PlacardGallery />
-        //             </Col>
-        //             <Col>
-        //                 {/* <Row>{data.price}</Row>
-        //                 <Row>{data.bedrooms.lower}</Row>
-        //                 <Row>{data.bathrooms}</Row> */}
-        //             </Col>
-        //         </Row>
-        //     </Card.Body>
-        // </Card>
       ))}
     </ol>
   );

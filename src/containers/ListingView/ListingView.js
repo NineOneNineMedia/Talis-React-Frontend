@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import ReactDOM from "react-dom";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import algoliasearch from "algoliasearch/lite";
@@ -14,13 +13,12 @@ import { InstantSearch, SearchBox, Pagination, Hits } from "react-instantsearch-
 import Header from "../../components/Header/Header";
 import { CustomHits } from "../../components/CustomHits/CustomHits";
 import ListingsFooter from "../../components/ListingsFooter/ListingsFooter";
+import { CustomGeoSearch } from "../../components/CustomGeoSearch/CustomGeoSearch";
 import { CustomSearchBox } from "../../components/CustomSearchBox/CustomSearchBox";
-import { CustomPagination } from "../../components/CustomPagination/CustomPagination";
 import { CustomSortBy } from "../../components/CustomSortBy/CustomSortBy";
 import { PriceNumericMenu } from "../../components/PriceNumericMenu/PriceNumericMenu";
 import { BedsNumericMenu } from "../../components/BedsNumericMenu/BedsNumericMenu";
 import { CustomRefinementList } from "../../components/CustomRefinementList/CustomRefinementList";
-import { RefinementList } from "react-instantsearch-dom";
 import "instantsearch.css/themes/algolia.css";
 import { connect } from "react-redux";
 
@@ -53,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   map: {
+    position: "relative",
     height: "100%",
     marginLeft: theme.spacing(3),
   },
@@ -115,9 +114,23 @@ export default function ListingView() {
 
         <Container disableGutters maxWidth="false">
           <Grid container direction="row" xs={12}>
-            <Grid item md={6}>
+            <Grid item md={7}>
               <div className={classes.map}>
-                <GoogleMapsLoader apiKey="AIzaSyC00vQGfJ3FNZ2oM-GkUMT4vYJOxyXQv64">
+                <CustomGeoSearch>
+                  {({ hits }) => (
+                    <div>
+                      <Control />
+                      {hits.map((hit) => (
+                        <Marker
+                          style={{ backgroundColor: "#00A3B0" }}
+                          key={hit.objectID}
+                          hit={hit}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </CustomGeoSearch>
+                {/* <GoogleMapsLoader apiKey="AIzaSyC00vQGfJ3FNZ2oM-GkUMT4vYJOxyXQv64">
                   {(google) => (
                     <GeoSearch
                       google={google}
@@ -131,27 +144,27 @@ export default function ListingView() {
                         <div>
                           <Control />
                           {hits.map((hit) => (
-                            <Marker key={hit.objectID} hit={hit} />
+                            <Marker
+                              style={{ backgroundColor: "#00A3B0" }}
+                              key={hit.objectID}
+                              hit={hit}
+                            />
                           ))}
                         </div>
                       )}
                     </GeoSearch>
                   )}
-                </GoogleMapsLoader>
+                </GoogleMapsLoader> */}
               </div>
               {/* <ListingsMap /> */}
             </Grid>
-            <Grid
-              item
-              md={6}
-              className={classes.listingPage} /* className="pr-0 listings-page" */
-            >
+            <Grid item md={5} className={classes.listingPage}>
               <CustomHits />
               <Pagination
                 showNext={true}
                 showPrevious={true}
                 showLast={true}
-                className={classes.pagination} /* className="mb-3" */
+                className={classes.pagination}
               />
               <ListingsFooter />
             </Grid>

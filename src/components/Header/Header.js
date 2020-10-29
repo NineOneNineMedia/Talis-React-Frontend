@@ -32,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
     color: "#000",
   },
+  phoneButton: {
+    marginLeft: theme.spacing(2),
+    color: "#000",
+  },
   link: {
     flexDirection: "start",
   },
@@ -66,10 +70,11 @@ function TemporaryDrawer({ isAuthenticated, logout }) {
             >
               <MenuIcon />
             </IconButton>
-            <Grid xs={1} item>
-              <img className={classes.logo} src={TalisLogo} alt="Talis Logo" />
-            </Grid>
-            {/* <Button className={classes.link} color="inherit">Login</Button> */}
+            <Typography xs={1}>
+              <Link href="/">
+                <img className={classes.logo} src={TalisLogo} alt="Talis Logo" />
+              </Link>
+            </Typography>
           </Toolbar>
         </AppBar>
       </div>

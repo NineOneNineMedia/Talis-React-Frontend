@@ -2,16 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../../components/Header/Header";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import {
-  Avatar,
-  AppBar,
-  Button,
-  Drawer,
-  Typography,
-  TextField,
-  Grid,
-} from "@material-ui/core";
+import { Button, Drawer, Typography, TextField, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
@@ -20,9 +11,7 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import SettingsIcon from "@material-ui/icons/Settings";
 import SearchIcon from "@material-ui/icons/Search";
 import { connect } from "react-redux";
 

@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -72,78 +71,60 @@ function RefinementList({ values, currentRefinement, items, refine }) {
             ) || {
               isRefined: false,
             };
-
             return (
-              <li
+              <MenuItem
+                disableGutters
                 key={staticItem.value}
                 value={staticItem.value}
-                style={{
-                  paddingLeft: "16px",
-                  paddingRight: "16px",
-                }}
               >
-                <FormControlLabel
-                  style={{ color: "#00A3B0" }}
-                  for="check"
-                  control={
-                    <Checkbox
-                      id="check"
-                      type="checkbox"
-                      color="primary"
-                      value={staticItem.value}
-                      checked={isRefined}
-                      onChange={(event) => {
-                        const value = event.currentTarget.value;
-                        const next = currentRefinement.includes(value)
-                          ? currentRefinement.filter((current) => current !== value)
-                          : currentRefinement.concat(value);
-
-                        refine(next);
-                      }}
-                    />
-                  }
-                  label={staticItem.label}
+                <Checkbox
+                  color="primary"
+                  value={staticItem.value}
+                  checked={isRefined}
+                  onChange={(event) => {
+                    const value = event.currentTarget.value;
+                    const next = currentRefinement.includes(value)
+                      ? currentRefinement.filter((current) => current !== value)
+                      : currentRefinement.concat(value);
+                    refine(next);
+                  }}
                 />
-              </li>
+                <ListItemText
+                  primary={staticItem.label}
+                  style={{ color: "#00A3B0" }}
+                />
+              </MenuItem>
             );
+            //<MenuItem >
+
+            //</MenuItem>
+            // <FormControlLabel
+            //   style={{ color: "#00A3B0" }}
+            //   control={
+            //     <Checkbox
+            //       key={staticItem.value}
+            //       value={staticItem.value}
+            //       id="check"
+            //       color="primary"
+            //       value={staticItem.value}
+            //       //checked={isRefined}
+            //       onChange={(event) => {
+            //         const value = event.currentTarget.value;
+            //         const next = currentRefinement.includes(value)
+            //           ? currentRefinement.filter((current) => current !== value)
+            //           : currentRefinement.concat(value);
+
+            //         refine(next);
+            //       }}
+            //     />
+            //   }
+            //   label={staticItem.label}
+            // />
           })}
         </Select>
       </FormControl>
     </Grid>
   );
-
-  // <Dropdown>
-  //     <Dropdown.Toggle variant="primary">
-  //         Type
-  //     </Dropdown.Toggle>
-
-  //     <Dropdown.Menu className="ais-RefinementList-list">
-  //         {values.map(staticItem => {
-  //             const { isRefined } = items.find(
-  //                 item => item.label === staticItem.label
-  //             ) || {
-  //                 isRefined: false,
-  //             };
-
-  //             return (
-  //                 <Dropdown.Item key={staticItem.value}>
-  //                     <label>
-  //                         <input
-  //                             type="checkbox"
-  //                             value={staticItem.value}
-  //                             checked={isRefined}
-  //                             onClick={event => {
-  //                                 event.preventDefault();
-  //                                 refine(staticItem.value);
-  //                             }}
-  //                         />
-  //                         {staticItem.label}
-  //                     </label>
-  //                 </Dropdown.Item>
-  //             );
-  //         })}
-  //     </Dropdown.Menu>
-  // </Dropdown>
 }
 
 export const CustomRefinementList = connectRefinementList(RefinementList);
