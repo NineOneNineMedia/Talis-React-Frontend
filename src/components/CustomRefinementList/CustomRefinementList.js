@@ -2,17 +2,12 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import InputLabel from "@material-ui/core/InputLabel";
-import Input from "@material-ui/core/Input";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import NativeSelect from "@material-ui/core/NativeSelect";
-import { Dropdown, DropdownButton, DropdownItem, Form } from "react-bootstrap";
-import { Highlight, connectRefinementList } from "react-instantsearch-dom";
+import { connectRefinementList } from "react-instantsearch-dom";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -95,31 +90,6 @@ function RefinementList({ values, currentRefinement, items, refine }) {
                 />
               </MenuItem>
             );
-            //<MenuItem >
-
-            //</MenuItem>
-            // <FormControlLabel
-            //   style={{ color: "#00A3B0" }}
-            //   control={
-            //     <Checkbox
-            //       key={staticItem.value}
-            //       value={staticItem.value}
-            //       id="check"
-            //       color="primary"
-            //       value={staticItem.value}
-            //       //checked={isRefined}
-            //       onChange={(event) => {
-            //         const value = event.currentTarget.value;
-            //         const next = currentRefinement.includes(value)
-            //           ? currentRefinement.filter((current) => current !== value)
-            //           : currentRefinement.concat(value);
-
-            //         refine(next);
-            //       }}
-            //     />
-            //   }
-            //   label={staticItem.label}
-            // />
           })}
         </Select>
       </FormControl>

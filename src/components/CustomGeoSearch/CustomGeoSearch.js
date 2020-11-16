@@ -1,9 +1,19 @@
 import React from "react";
 import { connectGeoSearch } from "react-instantsearch-dom";
 import L from "leaflet";
+import talisMarker from "../../assets/img/talis-marker.svg";
 //import "./Map.css";
 
 const accessToken = process.env.REACT_APP_MAPBOX_KEY;
+const mapMarker = L.icon({
+  iconUrl: talisMarker,
+
+  iconSize: [38, 95], // size of the icon
+  shadowSize: [50, 64], // size of the shadow
+  iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
+  shadowAnchor: [4, 62], // the same for the shadow
+  popupAnchor: [-3, -76], // point from which the popup should open relative to the iconAnchor
+});
 
 class GeoSearch extends React.Component {
   isUserInteraction = true;
@@ -12,63 +22,35 @@ class GeoSearch extends React.Component {
   componentDidMount() {
     const { refine } = this.props;
 
-    this.instance = L.map(this.el);
+    this.instance = L.map(this.el, { center: [5.55602, -0.1969], zoom: 11 });
 
     L.tileLayer(
-      "https://api.mapbox.com/styles/v1/mxnunley1/ckgs8lxoe187p1al3q9s3pohv/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibXhudW5sZXkxIiwiYSI6ImNrOTk1eWUwOTAzaTEzZHF3MzQxd3NlaTgifQ.VtOj8_k6ClIAFcvNwUAgRQ",
+      `https://api.mapbox.com/styles/v1/mxnunley1/ckgs8lxoe187p1al3q9s3pohv/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`,
       {
-        center: [5.55602, -0.1969],
-        zoom: 12,
         attribution:
           "Map data &copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors, <a href=&quot;https://creativecommons.org/licenses/by-sa/2.0/&quot;>CC-BY-SA</a>, Imagery &copy; <a href=&quot;https://www.mapbox.com/&quot;>Mapbox</a>",
       }
     ).addTo(this.instance);
-
-    this.instance.on("moveend", () => {
-      if (this.isUserInteraction) {
-        const ne = this.instance.getBounds().getNorthEast();
-        const sw = this.instance.getBounds().getSouthWest();
-
-        refine({
-          northEast: { lat: ne.lat, lng: ne.lng },
-          southWest: { lat: sw.lat, lng: sw.lng },
-        });
-      }
-    });
   }
 
   componentDidUpdate() {
-    const { hits, currentRefinement, position } = this.props;
+    const { hits, currentRefinement } = this.props;
 
     this.markers.forEach((marker) => marker.remove());
 
     this.markers = hits.map(({ _geoloc }) =>
-      L.marker([_geoloc.lat, _geoloc.lng]).addTo(this.instance)
+      L.marker([_geoloc.lat, _geoloc.lng], { icon: mapMarker }).addTo(this.instance)
     );
 
-    this.isUserInteraction = false;
-    if (!currentRefinement && this.markers.length) {
+    if (this.markers.length) {
       this.instance.fitBounds(L.featureGroup(this.markers).getBounds(), {
         animate: false,
+        padding: [10, 10],
       });
-    } else if (!currentRefinement) {
-      this.instance.setView(
-        position || {
-          lat: 5.55602,
-          lng: -0.1969,
-        },
-        12,
-        {
-          animate: false,
-        }
-      );
     }
-    this.isUserInteraction = true;
   }
 
   render() {
-    const { currentRefinement, refine } = this.props;
-
     return (
       <div>
         <div

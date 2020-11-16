@@ -8,7 +8,7 @@ import ListingCards from "../../components/ListingCards/ListingCards";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Button from "@material-ui/core/Button";
-import { Typography, Grid, Container } from "@material-ui/core";
+import { Typography, Grid, Container, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,10 +32,17 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "4rem",
     height: "70vh",
     textAlign: "center",
+    padding: theme.spacing(25, 0, 6),
     backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(${headerImg})`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center center",
     backgroundSize: "cover",
+    color: "white",
+  },
+  searchBar: {
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: "4px",
   },
 }));
 
@@ -54,9 +61,33 @@ export default function HomeView() {
   return (
     <div>
       <Header />
-      <Container className={classes.heroSection} disableGutters maxWidth="false">
-        <Grid item xs={12} md={6}>
-          <Container disableGutters maxWidth="false"></Container>
+      <Container className={classes.heroSection} maxWidth="false">
+        <Grid direction="row" align="center" spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="h2">Find Your New Home</Typography>
+          </Grid>
+          <Grid item container direction="row" spacing={1} xs={6}>
+            <Grid item xs={10}>
+              <TextField
+                className={classes.searchBar}
+                id="outlined-search"
+                placeholder="Search Neighborhood"
+                type="search"
+                variant="outlined"
+                color="white"
+              />
+            </Grid>
+            <Grid item xs={2}>
+              <Button
+                style={{ width: "100%", height: "100%" }}
+                variant="contained"
+                color="primary"
+                href="/listings"
+              >
+                Search
+              </Button>
+            </Grid>
+          </Grid>
         </Grid>
       </Container>
 
@@ -93,7 +124,11 @@ export default function HomeView() {
           </Grid>
           <Grid item xs={12} md={6}>
             <Container disableGutters maxWidth="false">
-              <img src={cardImg1} style={{ width: "100%", height: "auto" }} />
+              <img
+                src={cardImg1}
+                alt="Family enjoying new home"
+                style={{ width: "100%", height: "auto" }}
+              />
             </Container>
           </Grid>
         </Grid>
@@ -106,7 +141,11 @@ export default function HomeView() {
         >
           <Grid item xs={12} md={6}>
             <Container disableGutters maxWidth="false">
-              <img src={cardImg2} style={{ width: "100%", height: "auto" }} />
+              <img
+                src={cardImg2}
+                alt="Modern styled kitchen"
+                style={{ width: "100%", height: "auto" }}
+              />
             </Container>
           </Grid>
           <Grid className={classes.displayText} item xs={12} md={6} align="start">
@@ -135,7 +174,11 @@ export default function HomeView() {
           </Grid>
           <Grid item xs={12} md={6}>
             <Container disableGutters maxWidth="false">
-              <img src={cardImg3} style={{ width: "100%", height: "auto" }} />
+              <img
+                src={cardImg3}
+                alt="Family moving into new home"
+                style={{ width: "100%", height: "auto" }}
+              />
             </Container>
           </Grid>
         </Grid>

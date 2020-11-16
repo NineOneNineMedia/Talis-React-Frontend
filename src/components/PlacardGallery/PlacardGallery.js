@@ -6,6 +6,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import axios from "axios";
 import { connect } from "react-redux";
+import { Height } from "@material-ui/icons";
 
 // const images = [
 //   {
@@ -24,7 +25,7 @@ import { connect } from "react-redux";
 
 const useStyles = makeStyles({
   root: {
-    height: "100%",
+    width: "100%",
   },
   favoriteIcon: {
     position: "absolute",
@@ -42,7 +43,7 @@ function PlacardGallery(props) {
   const listing = props.listing;
   const images = [
     {
-      original: `https://talis-property-management.s3.amazonaws.com/media/${props.images}`,
+      original: `${props.images}`,
     },
   ];
   console.log(images);
@@ -81,7 +82,6 @@ function PlacardGallery(props) {
   return (
     <ImageGallery
       styles={{ zIndex: 10 }}
-      className={classes.root}
       items={images}
       showThumbnails={false}
       showFullscreenButton={false}

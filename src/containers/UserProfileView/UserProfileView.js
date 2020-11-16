@@ -77,7 +77,7 @@ function ProfileView(props) {
 
   useEffect(() => {
     getUserProfile();
-  }, [props]);
+  });
 
   const handleChange = (event) => {
     const val = event.target.value;

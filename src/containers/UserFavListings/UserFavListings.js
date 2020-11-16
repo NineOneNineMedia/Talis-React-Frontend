@@ -84,7 +84,7 @@ function FavoriteListingsView(props) {
 
   useEffect(() => {
     getFavoriteListings();
-  }, [props]);
+  });
 
   return (
     <div className={classes.root}>

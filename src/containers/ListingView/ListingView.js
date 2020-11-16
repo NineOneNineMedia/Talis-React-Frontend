@@ -3,26 +3,20 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Container from "@material-ui/core/Container";
 import algoliasearch from "algoliasearch/lite";
-import {
-  GoogleMapsLoader,
-  GeoSearch,
-  Control,
-  Marker,
-} from "react-instantsearch-dom-maps";
-import { InstantSearch, SearchBox, Pagination, Hits } from "react-instantsearch-dom";
+import { InstantSearch, Pagination } from "react-instantsearch-dom";
 import Header from "../../components/Header/Header";
 import { CustomHits } from "../../components/CustomHits/CustomHits";
 import ListingsFooter from "../../components/ListingsFooter/ListingsFooter";
 import { CustomGeoSearch } from "../../components/CustomGeoSearch/CustomGeoSearch";
 import { CustomSearchBox } from "../../components/CustomSearchBox/CustomSearchBox";
-import { CustomSortBy } from "../../components/CustomSortBy/CustomSortBy";
 import { PriceNumericMenu } from "../../components/PriceNumericMenu/PriceNumericMenu";
 import { BedsNumericMenu } from "../../components/BedsNumericMenu/BedsNumericMenu";
 import { CustomRefinementList } from "../../components/CustomRefinementList/CustomRefinementList";
 import "instantsearch.css/themes/algolia.css";
-import { connect } from "react-redux";
 
-const searchClient = algoliasearch("0K8NJFG4JX", "d084a720871c4f1cb8e2dd7478c03b57");
+const algoliaId = process.env.REACT_APP_ALGOLIA_ID;
+const searchKey = process.env.REACT_APP_SEARCH_KEY;
+const searchClient = algoliasearch(algoliaId, searchKey);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,47 +110,8 @@ export default function ListingView() {
           <Grid container direction="row" xs={12}>
             <Grid item md={7}>
               <div className={classes.map}>
-                <CustomGeoSearch>
-                  {({ hits }) => (
-                    <div>
-                      <Control />
-                      {hits.map((hit) => (
-                        <Marker
-                          style={{ backgroundColor: "#00A3B0" }}
-                          key={hit.objectID}
-                          hit={hit}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </CustomGeoSearch>
-                {/* <GoogleMapsLoader apiKey="AIzaSyC00vQGfJ3FNZ2oM-GkUMT4vYJOxyXQv64">
-                  {(google) => (
-                    <GeoSearch
-                      google={google}
-                      initialZoom={10}
-                      initialPosition={{
-                        lat: 5.55602,
-                        lng: -0.1969,
-                      }}
-                    >
-                      {({ hits }) => (
-                        <div>
-                          <Control />
-                          {hits.map((hit) => (
-                            <Marker
-                              style={{ backgroundColor: "#00A3B0" }}
-                              key={hit.objectID}
-                              hit={hit}
-                            />
-                          ))}
-                        </div>
-                      )}
-                    </GeoSearch>
-                  )}
-                </GoogleMapsLoader> */}
+                <CustomGeoSearch />
               </div>
-              {/* <ListingsMap /> */}
             </Grid>
             <Grid item md={5} className={classes.listingPage}>
               <CustomHits />

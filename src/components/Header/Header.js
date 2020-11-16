@@ -1,14 +1,11 @@
 import React from "react";
-import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import List from "@material-ui/core/List";
 import Link from "@material-ui/core/Link";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -116,16 +113,6 @@ function TemporaryDrawer({ isAuthenticated, logout }) {
                 </Link>
               </List>
             )}
-            {/* // <Link href="/login/">
-                        //     <ListItem button>
-                        //         Login
-                        //         </ListItem>
-                        // </Link>
-                        // <Link href="/register/">
-                        //     <ListItem button>
-                        //         Register
-                        //         </ListItem>
-                        // </Link> */}
           </List>
           <Divider />
           <List>
@@ -156,36 +143,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TemporaryDrawer);
-
-// import React from "react";
-// import { Navbar, Nav, Container, Row } from 'react-bootstrap';
-// import TalisLogo from '../../assets/img/navbar-logo.svg'
-
-// const Header = () => {
-//     const [modalShow, setModalShow] = React.useState(false);
-//     const [defaultActionKey, setDefaultActionKey] = React.useState("");
-//     return (
-//         <div>
-//             <Navbar collapseOnSelect expand="md" fixed="top">
-//                 <Navbar.Toggle aria-controls="responsive-navbar-nav" className="navbar-toggler" />
-//                 <Navbar.Brand href="/" className="mr-auto text-black-75 pl-2 pl-md-0"><img src={TalisLogo} alt="Talis Logo" /></Navbar.Brand>
-//                 <Navbar.Collapse id="responsive-navbar-nav">
-//                     <Nav className="mr-auto text-white">
-//                         <Nav.Link href="/">HOME</Nav.Link>
-//                         <Nav.Link href="/about">ABOUT</Nav.Link>
-//                         <Nav.Link href="/listings">AVAILABLE LISTINGS</Nav.Link>
-//                         <Nav.Link href="/myTalis/profile">myTalis</Nav.Link>
-//                     </Nav>
-//                 </Navbar.Collapse>
-//                 <Navbar.Collapse id="responsive-navbar-nav">
-//                     <Nav className="ml-auto text-white">
-//                         <Nav.Link href="/register/">Register</Nav.Link>
-//                         <Nav.Link href="/login/">Sign In</Nav.Link>
-//                     </Nav>
-//                 </Navbar.Collapse>
-//             </Navbar>
-//         </div >
-//     );
-// };
-
-// export default Header;
