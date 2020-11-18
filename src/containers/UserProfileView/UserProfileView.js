@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 import Header from "../../components/Header/Header";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -50,79 +51,80 @@ const useStyles = makeStyles((theme) => ({
 
 function ProfileView(props) {
   const classes = useStyles();
-  const [profile, setProfile] = useState({
-    fullName: "",
-    phoneNumber: "",
-    location: "",
-    //profileImage: null,
-  });
+  const { currentUser } = useAuth();
+  // const [profile, setProfile] = useState({
+  //   fullName: "",
+  //   phoneNumber: "",
+  //   location: "",
+  //   //profileImage: null,
+  // });
 
-  const getUserProfile = async () => {
-    await axios
-      .get(`http://127.0.0.1:8000/api/profiles/profile/${props.userId}`, {
-        headers: {
-          Authorization: `Token ${props.token}`,
-        },
-      })
-      .then((res) => {
-        const data = res.data;
-        setProfile({
-          fullName: data.full_name,
-          phoneNumber: data.phone_number,
-          location: data.location,
-          //profileImage: data.profile_image,
-        });
-      });
-  };
+  // const getUserProfile = async () => {
+  //   await axios
+  //     .get(`http://127.0.0.1:8000/api/profiles/profile/${props.userId}`, {
+  //       headers: {
+  //         Authorization: `Token ${props.token}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       const data = res.data;
+  //       setProfile({
+  //         fullName: data.full_name,
+  //         phoneNumber: data.phone_number,
+  //         location: data.location,
+  //         //profileImage: data.profile_image,
+  //       });
+  //     });
+  // };
 
-  useEffect(() => {
-    getUserProfile();
-  });
+  // useEffect(() => {
+  //   getUserProfile();
+  // });
 
-  const handleChange = (event) => {
-    const val = event.target.value;
-    setProfile({
-      ...profile,
-      [event.target.name]: val,
-    });
-  };
+  // const handleChange = (event) => {
+  //   const val = event.target.value;
+  //   setProfile({
+  //     ...profile,
+  //     [event.target.name]: val,
+  //   });
+  // };
 
-  const mySubmitHandler = (event) => {
-    event.preventDefault();
-    //alert(profile.fullName + " " + profile.phoneNumber);
-    let data = new FormData();
-    data.append("full_name", profile.fullName);
-    data.append("phone_number", profile.phoneNumber);
-    data.append("location", profile.location);
-    console.log(data);
-    axios
-      .put(
-        `http://127.0.0.1:8000/api/profiles/profile/${props.userId}`,
-        data,
-        // {
-        //   full_name: profile.fullName,
-        //   phone_number: profile.phoneNumber,
-        //   location: profile.location,
-        //   profile_image: profile.profileImage,
-        // },
-        {
-          headers: {
-            Authorization: `Token ${props.token}`,
-          },
-        }
-      )
-      .then((res) => {
-        const data = res.data;
-        console.log(data);
-        setProfile({
-          fullName: data.full_name,
-          phoneNumber: data.phone_number,
-          location: data.location,
-        });
-        window.location.reload();
-      })
-      .catch((err) => console.log(err));
-  };
+  // const mySubmitHandler = (event) => {
+  //   event.preventDefault();
+  //   //alert(profile.fullName + " " + profile.phoneNumber);
+  //   let data = new FormData();
+  //   data.append("full_name", profile.fullName);
+  //   data.append("phone_number", profile.phoneNumber);
+  //   data.append("location", profile.location);
+  //   console.log(data);
+  //   axios
+  //     .put(
+  //       `http://127.0.0.1:8000/api/profiles/profile/${props.userId}`,
+  //       data,
+  //       // {
+  //       //   full_name: profile.fullName,
+  //       //   phone_number: profile.phoneNumber,
+  //       //   location: profile.location,
+  //       //   profile_image: profile.profileImage,
+  //       // },
+  //       {
+  //         headers: {
+  //           Authorization: `Token ${props.token}`,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       const data = res.data;
+  //       console.log(data);
+  //       setProfile({
+  //         fullName: data.full_name,
+  //         phoneNumber: data.phone_number,
+  //         location: data.location,
+  //       });
+  //       window.location.reload();
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   return (
     <div className={classes.root}>
@@ -182,7 +184,7 @@ function ProfileView(props) {
         <Toolbar />
         <Typography h1>PROFILE</Typography>
         <hr />
-        <form onSubmit={mySubmitHandler}>
+        <form /* onSubmit={mySubmitHandler} */>
           <Grid container direction="row" align="center">
             {/* <Grid item direction="column" xs={12} md={4} align="start">
               <Avatar
@@ -215,7 +217,7 @@ function ProfileView(props) {
             >
               <Grid item>
                 <Typography>Email</Typography>
-                <Typography>user@mail.com Edit</Typography>
+                <Typography>{currentUser.email} Edit</Typography>
               </Grid>
               <Grid item>
                 <Typography>Password</Typography>
@@ -230,8 +232,8 @@ function ProfileView(props) {
                   variant="outlined"
                   color="primary"
                   name="fullName"
-                  value={profile.fullName}
-                  onChange={handleChange}
+                  // value={profile.fullName}
+                  // onChange={handleChange}
                 />
               </Grid>
               <Grid item>
@@ -243,8 +245,8 @@ function ProfileView(props) {
                   variant="outlined"
                   color="primary"
                   name="phoneNumber"
-                  value={profile.phoneNumber}
-                  onChange={handleChange}
+                  // value={profile.phoneNumber}
+                  // onChange={handleChange}
                 />
               </Grid>
               <Grid item>
@@ -256,8 +258,8 @@ function ProfileView(props) {
                   variant="outlined"
                   color="primary"
                   name="location"
-                  value={profile.location}
-                  onChange={handleChange}
+                  // value={profile.location}
+                  // onChange={handleChange}
                 />
               </Grid>
             </Grid>

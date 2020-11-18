@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { connect } from "react-redux";
+import { useAuth } from "../../contexts/AuthContext";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,11 +13,11 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import TalisLogo from "../../assets/img/navbar-logo.svg";
-import { Formik, Form } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
 import { LinearProgress } from "@material-ui/core";
 import * as actions from "../../store/actions/auth";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter, Redirect, useHistory } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import { FacebookLoginButton, GoogleLoginButton } from "react-social-login-buttons";
@@ -59,27 +60,74 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignInForm(props, { loading, error }) {
+function SignInForm(props) {
   const classes = useStyles();
-  const responseGoogle = (response) => {
-    console.log(response);
-    const access_token = response.accessToken;
-    props.googleAuth(access_token);
-  };
+  // const responseGoogle = (response) => {
+  //   console.log(response);
+  //   const access_token = response.accessToken;
+  //   props.googleAuth(access_token);
+  // };
 
-  const responseFacebook = (response) => {
-    console.log("Login Result", response);
-    const access_token = response.accessToken;
-    props.facebookAuth(access_token);
-  };
+  // const responseFacebook = (response) => {
+  //   console.log("Login Result", response);
+  //   const access_token = response.accessToken;
+  //   props.facebookAuth(access_token);
+  // };
 
-  if (props.isAuthenticated) {
-    return <Redirect to="/" />;
+  // if (props.isAuthenticated) {
+  //   return <Redirect to="/" />;
+  // }
+
+  // let errorMessage = null;
+  // if (error) {
+  //   errorMessage = <p>{error.message}</p>;
+  // }
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const { login, signInWithFacebook, signInWithGoogle } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    try {
+      setError("");
+      setLoading(true);
+      await login(emailRef.current.value, passwordRef.current.value);
+      history.push("/");
+    } catch {
+      setError("Failed to login");
+    }
+
+    setLoading(false);
   }
 
-  let errorMessage = null;
-  if (error) {
-    errorMessage = <p>{error.message}</p>;
+  async function handleFacebookLogin() {
+    try {
+      setError("");
+      setLoading(true);
+      await signInWithFacebook();
+      history.push("/");
+    } catch {
+      setError("Failed to login");
+    }
+
+    setLoading(false);
+  }
+
+  async function handleGoogleLogin() {
+    try {
+      setError("");
+      setLoading(true);
+      await signInWithGoogle();
+      history.push("/");
+    } catch {
+      setError("Failed to login");
+    }
+
+    setLoading(false);
   }
 
   return (
@@ -95,8 +143,83 @@ function SignInForm(props, { loading, error }) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        {errorMessage}
-        <Formik
+        {error}
+        <form className={classes.form} onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                inputRef={emailRef}
+                // value={values.username}
+                // onChange={handleChange}
+                // helperText={touched.username ? errors.username : ""}
+                // error={touched.username && Boolean(errors.username)}
+                autoComplete="username"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="password"
+                label="Password"
+                type="password"
+                inputRef={passwordRef}
+                // value={values.password}
+                // onChange={handleChange}
+                // helperText={touched.password ? errors.password : ""}
+                // error={touched.password && Boolean(errors.password)}
+              />
+            </Grid>
+          </Grid>
+          <br />
+          {loading && <LinearProgress />}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            disabled={loading}
+          >
+            Sign In
+          </Button>
+        </form>
+        <Grid container justify="center" spacing={2}>
+          <Grid item xs={9}>
+            <GoogleLoginButton
+              style={{ width: "100%" }}
+              align="center"
+              onClick={handleGoogleLogin}
+            >
+              <span>Sign in with Google</span>
+            </GoogleLoginButton>
+            <FacebookLoginButton
+              style={{ width: "100%" }}
+              align="center"
+              onClick={handleFacebookLogin}
+            >
+              <span>Sign in with Facebook</span>
+            </FacebookLoginButton>
+          </Grid>
+          <Grid container>
+            <Grid item xs>
+              <Link href="/register" variant="subtitle1">
+                {"Don't have an account? Sign Up"}
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="/forgotpassword" variant="subtitle1">
+                Forgot password?
+              </Link>
+            </Grid>
+          </Grid>
+        </Grid>
+        {/* <Formik
           initialValues={{
             username: "",
             password: "",
@@ -221,7 +344,7 @@ function SignInForm(props, { loading, error }) {
               </Grid>
             </Form>
           )}
-        </Formik>
+        </Formik> */}
       </div>
       <Box mt={8}>
         <Copyright />

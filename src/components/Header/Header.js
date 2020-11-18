@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import Grid from "@material-ui/core/Grid";
@@ -42,9 +44,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function TemporaryDrawer({ isAuthenticated, logout }) {
+function TemporaryDrawer({ isAuthenticated }) {
   const classes = useStyles();
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
   const [open, setOpen] = React.useState(false);
+  const history = useHistory();
+
+  async function handleLogout() {
+    setError("");
+
+    try {
+      await logout();
+      history.push("/");
+    } catch {
+      setError("Failed to logout");
+    }
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -57,6 +73,7 @@ function TemporaryDrawer({ isAuthenticated, logout }) {
   return (
     <div>
       <div className={classes.root}>
+        {error && alert(error)}
         <AppBar className={classes.appBar} position="fixed" color="white">
           <Toolbar>
             <IconButton
@@ -94,12 +111,12 @@ function TemporaryDrawer({ isAuthenticated, logout }) {
           </List>
           <Divider />
           <List>
-            {isAuthenticated ? (
+            {currentUser ? (
               <List>
                 <Link href="/myTalis/profile">
                   <ListItem button>myTalis</ListItem>
                 </Link>
-                <ListItem button key="2" onClick={logout}>
+                <ListItem button key="2" onClick={handleLogout}>
                   Logout
                 </ListItem>
               </List>

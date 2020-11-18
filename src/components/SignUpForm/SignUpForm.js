@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -12,6 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import Container from "@material-ui/core/Container";
 import TalisLogo from "../../assets/img/navbar-logo.svg";
+import Snackbar from "@material-ui/core/Snackbar";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { LinearProgress } from "@material-ui/core";
@@ -60,22 +62,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignUpForm(props, { loading, authFail }) {
+function SignUpForm(props /* { loading, authFail } */) {
   const classes = useStyles();
-  const responseGoogle = (response) => {
-    console.log(response);
-    const access_token = response.accessToken;
-    props.googleAuth(access_token);
-  };
+  // const responseGoogle = (response) => {
+  //   console.log(response);
+  //   const access_token = response.accessToken;
+  //   props.googleAuth(access_token);
+  // };
 
-  const responseFacebook = (response) => {
-    console.log("Login Result", response);
-    const access_token = response.accessToken;
-    props.facebookAuth(access_token);
-  };
+  // const responseFacebook = (response) => {
+  //   console.log("Login Result", response);
+  //   const access_token = response.accessToken;
+  //   props.facebookAuth(access_token);
+  // };
 
-  if (props.isAuthenticated) {
-    return <Redirect to="/" />;
+  // if (props.isAuthenticated) {
+  //   return <Redirect to="/" />;
+  // }
+
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
+  const { signUp } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+      console.log("error");
+      return setError("Passwords do not match");
+    }
+
+    try {
+      setError("");
+      setLoading(true);
+      await signUp(emailRef.current.value, passwordRef.current.value);
+    } catch {
+      setError("Failed to create an account");
+    }
+
+    setLoading(false);
   }
 
   return (
@@ -91,7 +119,79 @@ function SignUpForm(props, { loading, authFail }) {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Formik
+        {error && alert(error)}
+        <form className={classes.form} onSubmit={handleSubmit}>
+          <Grid container spacing={2}>
+            {/* <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="username"
+                label="Create Username"
+                name="username"
+                // value={values.username}
+                // onChange={handleChange}
+                // helperText={touched.username ? errors.username : ""}
+                // error={touched.username && Boolean(errors.username)}
+                autoComplete="lname"
+              />
+            </Grid> */}
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                inputRef={emailRef}
+                // onChange={handleChange}
+                // helperText={touched.email ? errors.email : ""}
+                // error={touched.email && Boolean(errors.email)}
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="password1"
+                label="Password"
+                type="password"
+                inputRef={passwordRef}
+                // onChange={handleChange}
+                // helperText={touched.password1 ? errors.password1 : ""}
+                //error={touched.password1 && Boolean(errors.password)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                fullWidth
+                id="password2"
+                label="Confirm Password"
+                type="password"
+                inputRef={passwordConfirmRef}
+                //value={values.password2}
+                // onChange={handleChange}
+                // helperText={touched.password2 ? errors.password2 : ""}
+                //error={touched.password2 && Boolean(errors.password2)}
+              />
+            </Grid>
+          </Grid>
+          <br />
+          {loading && <LinearProgress />}
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            disabled={loading}
+          >
+            Sign Up
+          </Button>
+        </form>
+        {/* <Formik
           initialValues={{
             username: "",
             email: "",
@@ -248,7 +348,7 @@ function SignUpForm(props, { loading, authFail }) {
               </Grid>
             </Form>
           )}
-        </Formik>
+        </Formik> */}
       </div>
       <Box mt={5}>
         <Copyright />

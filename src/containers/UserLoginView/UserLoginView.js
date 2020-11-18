@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import SignInForm from "../../components/SignInForm/SignInForm";
 import SignUpForm from "../../components/SignUpForm/SignUpForm";
+import ForgotPassword from "../../components/ForgotPasswordForm/ForgotPassword";
 
 export default function CenteredTabs() {
   return (
@@ -11,6 +12,9 @@ export default function CenteredTabs() {
       </Route>
       <Route path="/register">
         <SignUpForm />
+      </Route>
+      <Route path="/forgotpassword">
+        <ForgotPassword />
       </Route>
     </Switch>
   );
