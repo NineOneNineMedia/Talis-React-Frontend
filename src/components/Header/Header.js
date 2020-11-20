@@ -51,11 +51,11 @@ function TemporaryDrawer({ isAuthenticated }) {
   const [open, setOpen] = React.useState(false);
   const history = useHistory();
 
-  async function handleLogout() {
+  function handleLogout() {
     setError("");
 
     try {
-      await logout();
+      logout();
       history.push("/");
     } catch {
       setError("Failed to logout");
